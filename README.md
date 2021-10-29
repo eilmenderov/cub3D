@@ -1,7 +1,11 @@
 # 3D-game - cub3D
 ###  Usage:
 * ```make``` - to compile project
-* ```./cub3D ./maps/map_name.cub``` - to start project
+* ```./cub3D ./maps/map.cub``` - to start project
+* or 
+```
+make && ./cub3D ./maps/map.cub
+```
 
 
 <h3>You are allowed to use the following functions:</h3>
