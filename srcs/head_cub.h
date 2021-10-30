@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/30 14:25:50 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/10/30 17:21:29 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,39 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PIC_SIZE	64
+# define PIC_SIZE	20
+# define RES_X 1920
+# define RES_Y 1080
+
+typedef struct s_pic
+{
+	void			*img_wall;
+	struct s_opt	*opt;
+}				t_pic;
+
+typedef struct s_map
+{
+	char			**canvas;
+	char			*path_n;
+	char			*path_s;
+	char			*path_w;
+	char			*path_e;
+	char			viewpos;
+	unsigned int	floor;
+	unsigned int	sky;
+	struct s_opt	*opt;
+}				t_map;
 
 typedef struct s_opt
 {
-	t_list	**map;
-	char	**canvas;
+	t_list	**lst;
+	t_map	*map;
+	t_pic	*pic;
+	void	*img;
 	int		x_widht;
 	int		y_heidht;
-	char	*path_wall;
 	void	*mlx;
 	void	*win;
-	void	*img_wall;
-	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;

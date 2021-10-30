@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:14:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/30 14:26:39 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/10/30 17:24:44 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	parse_map(t_opt *opt)
 	t_list	*lst;
 
 	i = 0;
-	lst = *opt->map;
-	opt->canvas = malloc(sizeof(char *) * ft_lstsize(lst));
-	if (!opt->canvas)
+	lst = *opt->lst;
+	opt->map->canvas = malloc(sizeof(char *) * ft_lstsize(lst));
+	if (!opt->map->canvas)
 		exit(0);
 	while (lst)
 	{
-		opt->canvas[i] = lst->content;
+		opt->map->canvas[i] = lst->content;
 		lst = lst->next;
 		i++;
 	}
-	opt->canvas[i] = NULL;
+	opt->map->canvas[i] = NULL;
 }
 
 void	read_map(t_opt *opt, char *filename)
@@ -44,10 +44,10 @@ void	read_map(t_opt *opt, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	ft_gnl_old(fd, &line);
-	*(opt->map) = ft_lstnew(line);
+	*(opt->lst) = ft_lstnew(line);
 	while (ft_gnl_old(fd, &line))
-		ft_lstadd_back(opt->map, ft_lstnew(line));
-	ft_lstadd_back(opt->map, ft_lstnew(line));
+		ft_lstadd_back(opt->lst, ft_lstnew(line));
+	ft_lstadd_back(opt->lst, ft_lstnew(line));
 	parse_map(opt);
 }
 
@@ -61,9 +61,8 @@ int	keyhook(int key, t_opt *opt)
 
 void	fillopt(t_opt *opt)
 {
-	opt->x_widht = 20;
-	opt->y_heidht = 20;
-	opt->path_wall = "wall1.XPM";
+	opt->x_widht = PIC_SIZE;
+	opt->y_heidht = PIC_SIZE;
 }
 
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color)
@@ -84,13 +83,12 @@ void	sizepixel(t_opt *opt, int x, int y, int color)
 	int	x_size;
 	int	y_size;
 
-	y_size = y - 20;
-	while (y_size < y && y_size < 720)
+	y_size = y - PIC_SIZE;
+	while (y_size < y && y_size < RES_Y)
 	{
-		x_size = x - 20;
-		while (x_size < x && x_size < 1200)
+		x_size = x - PIC_SIZE;
+		while (x_size < x && x_size < RES_X)
 		{
-			printf("%d\t%d\n", y, x);
 			my_mlx_pixel_put(opt, x_size, y_size, color);
 			x_size++;
 		}
@@ -105,22 +103,22 @@ void	printmap(t_opt *opt)
 
 	y = 0;
 	x = 0;
-	while (opt->canvas[y])
+	while (opt->map->canvas[y])
 	{
 		x = 0;
-		opt->x_widht = 20;
-		while (opt->canvas[y][x])
+		opt->x_widht = PIC_SIZE;
+		while (opt->map->canvas[y][x])
 		{
-			if (opt->canvas[y][x] == '1')
+			if (opt->map->canvas[y][x] == '1')
 				sizepixel(opt, opt->x_widht, opt->y_heidht, 0xFFFFFF);
-			else if (opt->canvas[y][x] == '0')
+			else if (opt->map->canvas[y][x] == '0')
 				sizepixel(opt, opt->x_widht, opt->y_heidht, 0x708090);
-			else if (opt->canvas[y][x] == 'N')
+			else if (opt->map->canvas[y][x] == 'N')
 				sizepixel(opt, opt->x_widht, opt->y_heidht, 0xFF0000);
 			x++;
-			opt->x_widht += 20;
+			opt->x_widht += PIC_SIZE;
 		}
-		opt->y_heidht += 20;
+		opt->y_heidht += PIC_SIZE;
 		y++;
 	}
 }
@@ -132,11 +130,13 @@ int	main(int argc, char **argv)
 	fillopt(&opt);
 	if (argc != 2)
 		puterror("Map error");
-	opt.map = malloc(sizeof(t_list *));
+	opt.map = malloc(sizeof(t_map));
+	opt.pic = malloc(sizeof(t_pic));
+	opt.lst = malloc(sizeof(t_list *));
 	read_map(&opt, argv[1]);
 	opt.mlx = mlx_init();
-	opt.win = mlx_new_window(opt.mlx, 1280, 720, "cub3d");
-	opt.img = mlx_new_image(opt.mlx, 1280, 720);
+	opt.win = mlx_new_window(opt.mlx, RES_X, RES_Y, "cub3d");
+	opt.img = mlx_new_image(opt.mlx, RES_X, RES_Y);
 	opt.addr = mlx_get_data_addr(opt.img, &opt.bits_per_pixel, &opt.line_length, &opt.endian);
 	printmap(&opt);
 	mlx_put_image_to_window(opt.mlx, opt.win, opt.img, 20, 20);
