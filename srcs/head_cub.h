@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/29 13:42:45 by vleida           ###   ########.fr       */
+/*   Updated: 2021/10/29 18:20:15 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,17 @@
 # include <stdio.h>
 
 # define PIC_SIZE	64
+
+typedef struct s_opt
+{
+	t_list	**map;
+	char	**canvas;
+	int		x_widht;
+	int		y_heidht;
+	char	*path_wall;
+	void	*mlx;
+	void	*win;
+	void	*img_wall;
+}				t_opt;
 
 #endif
