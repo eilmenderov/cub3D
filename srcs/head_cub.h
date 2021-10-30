@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/30 17:21:29 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/10/30 17:59:23 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PIC_SIZE	20
+# define PIC_SIZE	10
 # define RES_X 1920
 # define RES_Y 1080
 
