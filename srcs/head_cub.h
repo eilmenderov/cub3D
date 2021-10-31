@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/30 17:21:29 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/10/31 14:58:56 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,17 @@ typedef struct s_opt
 	int		line_length;
 	int		endian;
 }				t_opt;
+
+/* 6/5 main.c */
+void	puterror(char *errorline);
+
+/* 3/5 parcer.c */
+void	ft_parcer(t_opt *opt, char *file);
+
+/* 1/5 dev_utils.c */
+void	ft_printf_all_info(t_opt *opt);
+
+/* 1/5 utils.c */
+void	puterror(char *errorline);
 
 #endif
