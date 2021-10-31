@@ -9,7 +9,7 @@ BONUS =	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c	\
 		ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c	\
 		ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c 		\
 		ft_strndup.c lib_utils.c get_next_line.c get_next_line_utils.c	\
-		ft_how_many_char.c ft_abs.c
+		ft_how_many_char.c ft_abs.c ft_strcmp.c
 
 SRCS_DIR = srcs/
 
