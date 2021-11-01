@@ -1,4 +1,4 @@
-SRCS		= main.c
+SRCS		= dev_utils.c main.c parcer.c utils.c
 
 BONUS		= main.c
 
