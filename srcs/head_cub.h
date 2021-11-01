@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/01 12:39:44 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/01 18:40:56 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PIC_SIZE	20
-# define RES_X		1920
-# define RES_Y		1080
+# define PIC_SIZE		20
+# define SPRITE_SIZE	64
+# define RES_X			1920
+# define RES_Y			1080
 
 /* field_symbols */
 # define NONE		'0'
@@ -34,7 +35,11 @@
 
 typedef struct s_pic
 {
-	void			*img_wall;
+	void			*wall_n;
+	void			*wall_s;
+	void			*wall_w;
+	void			*wall_e;
+
 	struct s_opt	*opt;
 }				t_pic;
 
@@ -47,15 +52,13 @@ typedef struct s_map
 	char			*path_w;
 	char			*path_e;
 	char			viewpos;
-	unsigned int	floor;
-	unsigned int	sky;
+	long			floor;
+	long			sky;
 	struct s_opt	*opt;
 }				t_map;
 
 typedef struct s_opt
 {
-	t_list	**lst;
-
 	int		x_widht;
 	int		y_heidht;
 

@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 13:47:04 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/29 13:03:33 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/01 18:24:21 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,8 @@ char	*ft_strjoin_m(char const *ost, char const *buf, int c);
 int		ft_ch_for_coinc(char c, char *str);
 void	ft_free_split(char **rez);
 
+/* 2/5 dop_func.c */
+int		ft_skip_fw(char *str, unsigned char sym);
+char	*ft_first_word(char *line, unsigned char sym);
+void	ft_free_all_lst(t_list *lst);
 #endif

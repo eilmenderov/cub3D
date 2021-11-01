@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 14:26:25 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/31 15:49:45 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/01 18:38:29 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_printf_all_info(t_opt *opt)
 	printf("W_sprite: %s\n", opt->map->path_w);
 	printf("E_sprite: %s\n", opt->map->path_e);
 	printf("viewpos: |%c|\n", opt->map->viewpos);
-	printf("Flor_col: %d\n", opt->map->floor);
-	printf("Sky_coll: %d\n", opt->map->sky);
+	printf("Flor_col: %lX\n", opt->map->floor);
+	printf("Sky_coll: %lX\n", opt->map->sky);
 	printf("=============== end ===============\n");
 }
