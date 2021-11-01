@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/31 18:22:50 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/01 12:39:44 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef HEAD_CUB_H
 # define HEAD_CUB_H
@@ -81,5 +82,8 @@ void	ft_printf_all_info(t_opt *opt);
 
 /* 1/5 utils.c */
 void	puterror(char *errorline);
+void	printmap(t_opt *opt);
+void	sizepixel(t_opt *opt, int x, int y, int color);
+void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 
 #endif
