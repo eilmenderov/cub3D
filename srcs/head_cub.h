@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/30 17:59:23 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/10/30 18:29:51 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,9 @@ typedef struct s_opt
 	int		line_length;
 	int		endian;
 }				t_opt;
+
+void	printmap(t_opt *opt);
+void	sizepixel(t_opt *opt, int x, int y, int color);
+void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 
 #endif

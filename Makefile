@@ -1,4 +1,4 @@
-SRCS		= main.c
+SRCS		= main.c print_map.c
 
 BONUS		= main.c
 
