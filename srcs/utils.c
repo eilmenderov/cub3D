@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 14:56:33 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/31 14:57:10 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/01 14:34:48 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ void	puterror(char *errorline)
 	ft_putendl_fd(errorline, 1);
 	exit(1);
 }
-

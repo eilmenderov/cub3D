@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/01 12:39:44 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/01 15:46:20 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PIC_SIZE	20
+# define PIC_SIZE	50
 # define RES_X		1920
 # define RES_Y		1080
 
@@ -85,5 +85,6 @@ void	puterror(char *errorline);
 void	printmap(t_opt *opt);
 void	sizepixel(t_opt *opt, int x, int y, int color);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
+void	sizepixel_player(t_opt *opt, int x, int y, int color);
 
 #endif
