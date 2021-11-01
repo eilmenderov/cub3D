@@ -5,7 +5,7 @@ void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color)
 	char	*dst;
 
 	dst = opt->addr + (y * opt->line_length + x * (opt->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int*) dst = color;
 }
 
 void	sizepixel(t_opt *opt, int x, int y, int color)
