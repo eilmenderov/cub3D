@@ -6,7 +6,7 @@
 /*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/02 17:14:29 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/02 20:16:18 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define DELTA			5
 # define RES_X			1280
 # define RES_Y			720
-# define REYS			200
+# define REYS			1000
 # define ANGLE			1
 
 /* keys */

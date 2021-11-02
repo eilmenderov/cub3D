@@ -32,6 +32,9 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	float	start;
 	float	end;
 
+	printf("%f\n", opt->angle);
+	if (opt->angle < 0)
+		opt->angle += 6.3;
 	start = opt->angle;
 	end = start + ANGLE;
 	while (start < end)
