@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/01 18:45:27 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:59:41 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,20 @@
 # include <string.h>
 # include <stdio.h>
 
-# define PIC_SIZE		50
+/* pic */
+# define PIC_SIZE		30
 # define SPRITE_SIZE	64
-# define RES_X			1920
-# define RES_Y			1080
+# define DELTA			5
+# define RES_X			1280
+# define RES_Y			720
+# define REYS			100
+# define ANGLE			1.6
+
+/* keys */
+# define W_KEY			13
+# define A_KEY			0
+# define S_KEY			1
+# define D_KEY			2
 
 /* field_symbols */
 # define NONE		'0'
@@ -59,8 +69,8 @@ typedef struct s_map
 
 typedef struct s_opt
 {
-	int		x_widht;
-	int		y_heidht;
+	float	x_widht;
+	float	y_heidht;
 
 	void	*mlx;
 	void	*win;
