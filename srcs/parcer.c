@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/01 18:45:41 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/02 17:14:27 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_init_opt_map(t_opt *opt)
 	opt->map->opt = opt;
 	opt->x_widht = PIC_SIZE;
 	opt->y_heidht = PIC_SIZE;
+	opt->angle = 0;
 	opt->map->canvas = NULL;
 	opt->map->path_n = NULL;
 	opt->map->path_s = NULL;

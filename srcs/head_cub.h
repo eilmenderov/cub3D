@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/02 16:59:41 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/02 17:14:29 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@
 # define DELTA			5
 # define RES_X			1280
 # define RES_Y			720
-# define REYS			100
-# define ANGLE			1.6
+# define REYS			200
+# define ANGLE			1
 
 /* keys */
 # define W_KEY			13
 # define A_KEY			0
 # define S_KEY			1
 # define D_KEY			2
+# define RL_KEY			123
+# define RR_KEY			124
 
 /* field_symbols */
 # define NONE		'0'
@@ -71,6 +73,7 @@ typedef struct s_opt
 {
 	float	x_widht;
 	float	y_heidht;
+	float	angle;
 
 	void	*mlx;
 	void	*win;

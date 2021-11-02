@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:14:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/02 16:48:07 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/02 17:16:10 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int	keyhook(int key, t_opt *opt)
 		if (opt->map->canvas[(int)((opt->y_heidht - 5) / PIC_SIZE)][(int)((opt->x_widht) / PIC_SIZE)] != '1')
 			opt->x_widht += step, printf("d_x: %f	d_y: %f\n", opt->x_widht, opt->y_heidht);
 	}
+	if (key == RL_KEY)
+		opt->angle -= M_PI / 180;
+	if (key == RR_KEY)
+		opt->angle += M_PI / 180;
 	if (key == 53)
 		exit(0);
 	printmap(opt);

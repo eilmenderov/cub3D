@@ -32,7 +32,7 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	float	start;
 	float	end;
 
-	start = 1.5;
+	start = opt->angle;
 	end = start + ANGLE;
 	while (start < end)
 	{
