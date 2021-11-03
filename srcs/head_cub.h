@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/02 20:16:18 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/03 16:35:39 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,18 @@
 # define RES_X			1280
 # define RES_Y			720
 # define REYS			1000
-# define ANGLE			1
+# define ANGLE			1.08
+# define DELIM			10
+
+/* color */
+# define COLOR_TEXT			0xEAEAEA
+# define BACKGROUND			0x222222
+# define MENU_BACKGROUND	0x1E1E1E
+# define COLOR_UP			0xEF8633
+# define COLOR_RED			0xCC3333
+# define COLOR_ZERO			0x33FF00
+# define COLOR_WHITE		0xFFFFCC
+# define COLOR_DEEP			0x00CCFF
 
 /* keys */
 # define W_KEY			13
@@ -57,6 +68,8 @@ typedef struct s_pic
 
 typedef struct s_map
 {
+	float			h_stl;
+
 	unsigned char	flag;
 	char			**canvas;
 	char			*path_n;
@@ -79,6 +92,8 @@ typedef struct s_opt
 	void	*win;
 	void	*img;
 	char	*addr;
+	void	*img_map;
+	char	*addr_map;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;

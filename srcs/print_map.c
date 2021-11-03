@@ -12,9 +12,10 @@ void	ft_cast_one_ray(t_opt *opt, int diff)
 {
 	float	x;
 	float	y;
+	float	l;
 	float	full_angle;
 
-	full_angle = M_PI * 0.5;
+	full_angle = opt->angle * 0.5;
 	x = opt->x_widht - diff / 2;
 	y = opt->y_heidht - diff / 2;
 	while (opt->map->canvas[(int)(y / PIC_SIZE)][(int)(x / PIC_SIZE)] != '1')
@@ -22,6 +23,25 @@ void	ft_cast_one_ray(t_opt *opt, int diff)
 		x += cos(full_angle);
 		y += sin(full_angle);
 		my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
+	}
+	l = sqrt(pow(opt->x_widht - x, 2) + pow(opt->y_heidht - y, 2));
+	printf("ray_len: %f\n", l);
+}
+
+void	ft_draw_3d(t_opt *opt, float len, float start, float x)
+{
+	float	y;
+	float	end;
+
+	end = start + len;
+	y = 0;
+	while (y < RES_Y)
+	{
+		if (y >= start && y <= end)
+			my_mlx_pixel_put(opt, (int)x, (int)y, COLOR_DEEP);
+		else
+			my_mlx_pixel_put(opt, (int)x, (int)y, 0);
+		y += 1;
 	}
 }
 
@@ -32,11 +52,15 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	float	start;
 	float	end;
 
-	printf("%f\n", opt->angle);
+	float	l;
+	float	h_stl;
+	float	h_y0;
+
 	if (opt->angle < 0)
-		opt->angle += 6.3;
+		opt->angle = M_PI * 2;
 	start = opt->angle;
 	end = start + ANGLE;
+	// mlx_clear_window(opt->mlx,  opt->win);
 	while (start < end)
 	{
 		x = opt->x_widht - diff / 2;
@@ -47,7 +71,12 @@ void	ft_cast_rays(t_opt *opt, int diff)
 			y += sin(start);
 			my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 		}
-		start += end / REYS;
+		l = sqrt(pow(opt->x_widht - x, 2) + pow(opt->y_heidht - y, 2));
+		h_stl = opt->map->h_stl / l;
+		h_y0 = (RES_Y / 2.0) - (h_stl / 2);
+		// printf("vysota: %f	y0: %f\n", h_stl, h_y0);
+		ft_draw_3d(opt, h_stl, h_y0, x);
+		start += (ANGLE / REYS);
 	}
 }
 
@@ -58,6 +87,9 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 	int	diff;
 
 	diff = PIC_SIZE - (int)(PIC_SIZE * 0.2);
+	// ft_cast_one_ray(opt, diff);
+	(void)color;
+	ft_cast_rays(opt, diff);
 	y_size = y - diff;
 	while (y_size < y && y_size < RES_Y)
 	{
@@ -69,8 +101,6 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 		}
 		y_size++;
 	}
-	// ft_cast_one_ray(opt, diff);
-	ft_cast_rays(opt, diff);
 }
 
 void	sizepixel(t_opt *opt, int x, int y, int color)

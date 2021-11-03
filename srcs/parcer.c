@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/02 17:14:27 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/03 16:36:02 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_init_opt_map(t_opt *opt)
 	opt->map->sky = -1;
 	opt->map->viewpos = 0;
 	opt->map->flag = 0;
+	opt->map->h_stl = ((RES_X / 2) * PIC_SIZE) / (tan(ANGLE / 2));
 }
 
 void	ft_init_structs(t_opt *opt)
@@ -72,6 +73,9 @@ void	ft_init_structs(t_opt *opt)
 		puterror("can't create new image");
 	opt->addr = mlx_get_data_addr(opt->img, &opt->bits_per_pixel,
 			&opt->line_length, &opt->endian);
+	opt->img_map = mlx_new_image(opt->mlx, (RES_X / DELIM), (RES_Y / DELIM));
+	if (!opt->img_map)
+		puterror("can't create new image");
 	if (!opt->addr)
 		puterror("can't get addr");
 	ft_init_opt_map(opt);
@@ -105,7 +109,7 @@ void	ft_pool_collor(long *adress, char *line, t_map *map)
 	rgb[2] = ft_atoi_m(&line[i]);
 	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
 		puterror("incorrect color format");
-	printf("r = %d	g = %d	b = %d\n", rgb[0], rgb[1], rgb[2]);
+	// printf("r = %d	g = %d	b = %d\n", rgb[0], rgb[1], rgb[2]);
 	map->flag++;
 	*adress = ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 }
@@ -206,5 +210,5 @@ void	ft_parcer(t_opt *opt, char *file)
 		puterror("file does not exist, access denied or open error");
 	ft_init_structs(opt);
 	ft_check_map(opt, fd, 1);
-	ft_printf_all_info(opt);
+	// ft_printf_all_info(opt);
 }
