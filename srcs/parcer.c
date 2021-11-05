@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/03 16:36:02 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:25:10 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,52 +33,6 @@ int	ft_atoi_m(const char *str)
 	if ((res > FT_ATOI_MV && negative == 1) || (*str != ',' && *str != 0))
 		puterror("incorrect color format(atoi_m 2)");
 	return ((int)res * negative);
-}
-
-void	ft_init_opt_map(t_opt *opt)
-{
-	opt->pic->opt = opt;
-	opt->map->opt = opt;
-	opt->x_widht = PIC_SIZE;
-	opt->y_heidht = PIC_SIZE;
-	opt->angle = 0;
-	opt->map->canvas = NULL;
-	opt->map->path_n = NULL;
-	opt->map->path_s = NULL;
-	opt->map->path_w = NULL;
-	opt->map->path_e = NULL;
-	opt->map->floor = -1;
-	opt->map->sky = -1;
-	opt->map->viewpos = 0;
-	opt->map->flag = 0;
-	opt->map->h_stl = ((RES_X / 2) * PIC_SIZE) / (tan(ANGLE / 2));
-}
-
-void	ft_init_structs(t_opt *opt)
-{
-	opt->map = malloc(sizeof(t_map));
-	if (!opt->map)
-		puterror("can't allocate memory(map)");
-	opt->pic = malloc(sizeof(t_pic));
-	if (!opt->pic)
-		puterror("can't allocate memory(pic)");
-	opt->mlx = mlx_init();
-	if (!opt->mlx)
-		puterror("can't initialize mlx");
-	opt->win = mlx_new_window(opt->mlx, RES_X, RES_Y, "cub3d");
-	if (!opt->win)
-		puterror("can't create game window");
-	opt->img = mlx_new_image(opt->mlx, RES_X, RES_Y);
-	if (!opt->img)
-		puterror("can't create new image");
-	opt->addr = mlx_get_data_addr(opt->img, &opt->bits_per_pixel,
-			&opt->line_length, &opt->endian);
-	opt->img_map = mlx_new_image(opt->mlx, (RES_X / DELIM), (RES_Y / DELIM));
-	if (!opt->img_map)
-		puterror("can't create new image");
-	if (!opt->addr)
-		puterror("can't get addr");
-	ft_init_opt_map(opt);
 }
 
 void	ft_pool_sprite_path(char **adress, char *line, t_map *map)

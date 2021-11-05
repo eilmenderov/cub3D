@@ -1,4 +1,4 @@
-SRCS		= dev_utils.c main.c parcer.c utils.c print_map.c
+SRCS		= dev_utils.c main.c parcer.c utils.c print_map.c init.c
 
 BONUS		= main.c
 

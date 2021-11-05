@@ -1,0 +1,27 @@
+	// float	l;
+	// float	h_stl;
+	// float	h_y0;
+
+		// l = sqrt(pow(opt->x_widht - x, 2) + pow(opt->y_heidht - y, 2));
+		// h_stl = opt->map->h_stl / l;
+		// h_y0 = (RES_Y / 2.0) - (h_stl / 2);
+		// // printf("vysota: %f	y0: %f\n", h_stl, h_y0);
+		// ft_draw_3d(opt, h_stl, h_y0, x);
+
+
+void	ft_draw_3d(t_opt *opt, float len, float start, float x)
+{
+	float	y;
+	float	end;
+
+	end = start + len;
+	y = 0;
+	while (y < RES_Y)
+	{
+		if (y >= start && y <= end)
+			my_mlx_pixel_put(opt, (int)x, (int)y, COLOR_DEEP);
+		else
+			my_mlx_pixel_put(opt, (int)x, (int)y, 0);
+		y += 1;
+	}
+}

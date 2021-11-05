@@ -4,7 +4,8 @@ void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = opt->addr + (y * opt->line_length + x * (opt->bits_per_pixel / 8));
+	dst = opt->minimap->addr + (y * opt->minimap->line_length + x
+			* (opt->minimap->b_p_p / 8));
 	*(unsigned int *)dst = color;
 }
 
@@ -25,24 +26,6 @@ void	ft_cast_one_ray(t_opt *opt, int diff)
 		my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 	}
 	l = sqrt(pow(opt->x_widht - x, 2) + pow(opt->y_heidht - y, 2));
-	printf("ray_len: %f\n", l);
-}
-
-void	ft_draw_3d(t_opt *opt, float len, float start, float x)
-{
-	float	y;
-	float	end;
-
-	end = start + len;
-	y = 0;
-	while (y < RES_Y)
-	{
-		if (y >= start && y <= end)
-			my_mlx_pixel_put(opt, (int)x, (int)y, COLOR_DEEP);
-		else
-			my_mlx_pixel_put(opt, (int)x, (int)y, 0);
-		y += 1;
-	}
 }
 
 void	ft_cast_rays(t_opt *opt, int diff)
@@ -52,30 +35,19 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	float	start;
 	float	end;
 
-	float	l;
-	float	h_stl;
-	float	h_y0;
-
-	if (opt->angle < 0)
-		opt->angle = M_PI * 2;
+	opt->angle = ft_angle(opt->angle);
 	start = opt->angle;
 	end = start + ANGLE;
-	// mlx_clear_window(opt->mlx,  opt->win);
 	while (start < end)
 	{
 		x = opt->x_widht - diff / 2;
 		y = opt->y_heidht - diff / 2;
-		while (opt->map->canvas[(int)(y / PIC_SIZE)][(int)(x / PIC_SIZE)] != '1')
+		while (opt->map->canvas[(int)(y / MAP_SIZE)][(int)(x / MAP_SIZE)] != '1')
 		{
 			x += cos(start);
 			y += sin(start);
 			my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 		}
-		l = sqrt(pow(opt->x_widht - x, 2) + pow(opt->y_heidht - y, 2));
-		h_stl = opt->map->h_stl / l;
-		h_y0 = (RES_Y / 2.0) - (h_stl / 2);
-		// printf("vysota: %f	y0: %f\n", h_stl, h_y0);
-		ft_draw_3d(opt, h_stl, h_y0, x);
 		start += (ANGLE / REYS);
 	}
 }
@@ -86,9 +58,8 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 	int	y_size;
 	int	diff;
 
-	diff = PIC_SIZE - (int)(PIC_SIZE * 0.2);
+	diff = MAP_SIZE - (int)(MAP_SIZE * 0.8);
 	// ft_cast_one_ray(opt, diff);
-	(void)color;
 	ft_cast_rays(opt, diff);
 	y_size = y - diff;
 	while (y_size < y && y_size < RES_Y)
@@ -109,10 +80,10 @@ void	sizepixel(t_opt *opt, int x, int y, int color)
 	int	y_size;
 
 	y_size = y;
-	while (y_size < y + PIC_SIZE && y_size < RES_Y)
+	while (y_size < y + MAP_SIZE && y_size < RES_Y)
 	{
 		x_size = x;
-		while (x_size < x + PIC_SIZE && x_size < RES_X)
+		while (x_size < x + MAP_SIZE && x_size < RES_X)
 		{
 			my_mlx_pixel_put(opt, x_size, y_size, color);
 			x_size++;
@@ -121,7 +92,7 @@ void	sizepixel(t_opt *opt, int x, int y, int color)
 	}
 }
 
-void	printmap(t_opt *opt)
+void	print_minimap(t_opt *opt)
 {
 	int	x;
 	int	y;	
@@ -149,9 +120,9 @@ void	printmap(t_opt *opt)
 					opt->map->canvas[y][x] = '0';
 				}
 			}
-			step_x += PIC_SIZE;
+			step_x += MAP_SIZE;
 		}
-		step_y += PIC_SIZE;
+		step_y += MAP_SIZE;
 	}
 	sizepixel_player(opt, (int)opt->x_widht, (int)opt->y_heidht, 0xFF0000);
 }

@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/03 16:35:39 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/05 18:19:15 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@
 # include <stdio.h>
 
 /* pic */
+# define MAP_SIZE		10
 # define PIC_SIZE		30
 # define SPRITE_SIZE	64
 # define DELTA			5
 # define RES_X			1280
 # define RES_Y			720
-# define REYS			1000
-# define ANGLE			1.08
+# define REYS			100
+# define ANGLE			1.57
 # define DELIM			10
+# define ROT_SPEED		45
+# define MOVE_SPEED		0.15
 
 /* color */
 # define COLOR_TEXT			0xEAEAEA
@@ -82,6 +85,15 @@ typedef struct s_map
 	struct s_opt	*opt;
 }				t_map;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		b_p_p;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_opt
 {
 	float	x_widht;
@@ -90,14 +102,9 @@ typedef struct s_opt
 
 	void	*mlx;
 	void	*win;
-	void	*img;
-	char	*addr;
-	void	*img_map;
-	char	*addr_map;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
 
+	t_img	*mand;
+	t_img	*minimap;
 	t_map	*map;
 	t_pic	*pic;
 }				t_opt;
@@ -113,9 +120,14 @@ void	ft_printf_all_info(t_opt *opt);
 
 /* 1/5 utils.c */
 void	puterror(char *errorline);
-void	printmap(t_opt *opt);
+float	ft_angle(float alpha);
+
+void	print_minimap(t_opt *opt);
 void	sizepixel(t_opt *opt, int x, int y, int color);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 void	sizepixel_player(t_opt *opt, int x, int y, int color);
+
+/* 2/5 init.c*/
+void	ft_init_structs(t_opt *opt);
 
 #endif
