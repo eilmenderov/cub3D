@@ -44,8 +44,8 @@ void	ft_cast_rays(t_opt *opt, int diff)
 		y = opt->y_heidht - diff / 2;
 		while (opt->map->canvas[(int)(y / MAP_SIZE)][(int)(x / MAP_SIZE)] != '1')
 		{
-			x += cos(start);
-			y += sin(start);
+			x += cos(start - ANGLE * 0.5);
+			y += sin(start - ANGLE * 0.5);
 			my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 		}
 		start += (ANGLE / REYS);

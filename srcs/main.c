@@ -12,19 +12,38 @@
 
 #include "head_cub.h"
 
+int	ft_check_p(t_map *map, t_opt *opt)
+{
+	(void)map;
+	(void)opt;
+	return (0);
+}
+
 int	keyhook(int key, t_opt *opt)
 {
 	int	step;
 
-	step = (int)PIC_SIZE * MOVE_SPEED;
-	if (key == W_KEY && opt->y_heidht > PIC_SIZE)
-			opt->y_heidht += (step * sin(opt->angle)), opt->x_widht += (step * cos(opt->angle));
-	if (key == A_KEY && opt->x_widht > PIC_SIZE)
-			opt->y_heidht -= (step * sin(opt->angle + M_PI_2)), opt->x_widht -= (step * cos(opt->angle + M_PI_2));
-	if (key == S_KEY)
-			opt->y_heidht -= (step * sin(opt->angle)), opt->x_widht -= (step * cos(opt->angle));
-	if (key == D_KEY)
-			opt->y_heidht += (step * sin(opt->angle + M_PI_2)), opt->x_widht += (step * cos(opt->angle + M_PI_2));
+	step = (int)MAP_SIZE * MOVE_SPEED;
+	if (key == W_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->y_heidht += (step * sin(opt->angle));
+		opt->x_widht += (step * cos(opt->angle));
+	}
+	if (key == A_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->y_heidht -= (step * sin(opt->angle + M_PI_2));
+		opt->x_widht -= (step * cos(opt->angle + M_PI_2));
+	}
+	if (key == S_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->y_heidht -= (step * sin(opt->angle));
+		opt->x_widht -= (step * cos(opt->angle));
+	}
+	if (key == D_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->y_heidht += (step * sin(opt->angle + M_PI_2));
+		opt->x_widht += (step * cos(opt->angle + M_PI_2));
+	}
 	if (key == RL_KEY)
 		opt->angle -= M_PI / ROT_SPEED;
 	if (key == RR_KEY)
@@ -61,7 +80,9 @@ void	print_mandatori(t_opt *opt)
 		x = 0;
 		while (x < RES_X)
 		{
-			if (y > RES_Y * 0.5)
+			if (x < RES_X * 0.267 && y < RES_Y * 0.207)
+				mand_pixel_put(opt, x, y, 0);
+			else if (y > RES_Y * 0.5)
 				mand_pixel_put(opt, x, y, opt->map->floor);
 			else
 				mand_pixel_put(opt, x, y, opt->map->sky);
