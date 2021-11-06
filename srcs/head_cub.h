@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/05 18:19:15 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/05 18:58:24 by fcarl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MAP_SIZE		10
 # define PIC_SIZE		30
 # define SPRITE_SIZE	64
-# define DELTA			5
+# define DELTA			0
 # define RES_X			1280
 # define RES_Y			720
 # define REYS			100
@@ -44,6 +44,8 @@
 # define COLOR_ZERO			0x33FF00
 # define COLOR_WHITE		0xFFFFCC
 # define COLOR_DEEP			0x00CCFF
+# define COLOR_GOLD			0x705335
+# define COLOR_GREEN		0x004B49
 
 /* keys */
 # define W_KEY			13
@@ -110,6 +112,7 @@ typedef struct s_opt
 }				t_opt;
 
 /* 6/5 main.c */
+void	print_mandatori(t_opt *opt);
 void	puterror(char *errorline);
 
 /* 3/5 parcer.c */

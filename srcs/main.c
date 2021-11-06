@@ -18,43 +18,25 @@ int	keyhook(int key, t_opt *opt)
 
 	step = (int)PIC_SIZE * MOVE_SPEED;
 	if (key == W_KEY && opt->y_heidht > PIC_SIZE)
-	{
-		// printf("forwad   key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 10) / PIC_SIZE)][(int)((opt->x_widht - 5) / PIC_SIZE)] != '1')
 			opt->y_heidht += (step * sin(opt->angle)), opt->x_widht += (step * cos(opt->angle));
-	}
 	if (key == A_KEY && opt->x_widht > PIC_SIZE)
-	{
-		// printf("left     key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 5) / PIC_SIZE)][(int)((opt->x_widht - 10) / PIC_SIZE)] != '1')
 			opt->y_heidht -= (step * sin(opt->angle + M_PI_2)), opt->x_widht -= (step * cos(opt->angle + M_PI_2));
-	}
 	if (key == S_KEY)
-	{
-		// printf("backward key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht) / PIC_SIZE)][(int)((opt->x_widht - 5) / PIC_SIZE)] != '1')
 			opt->y_heidht -= (step * sin(opt->angle)), opt->x_widht -= (step * cos(opt->angle));
-	}
 	if (key == D_KEY)
-	{
-		// printf("right    key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 5) / PIC_SIZE)][(int)((opt->x_widht) / PIC_SIZE)] != '1')
 			opt->y_heidht += (step * sin(opt->angle + M_PI_2)), opt->x_widht += (step * cos(opt->angle + M_PI_2));
-	}
 	if (key == RL_KEY)
 		opt->angle -= M_PI / ROT_SPEED;
 	if (key == RR_KEY)
 		opt->angle += M_PI / ROT_SPEED;
 	if (key == 53)
 		exit(0);
-	sizepixel_player(opt, (int)opt->x_widht, (int)opt->y_heidht, 0xFF0000);
-	print_minimap(opt);
-	mlx_put_image_to_window(opt->mlx, opt->win, opt->minimap->img, DELTA, DELTA);
-	printf("key: %d	w_x: %f	w_y: %f angle: %f\n", key, opt->x_widht, opt->y_heidht, opt->angle);
 	return (key);
 }
 
-int	closer(void)
+/* Добавить free */
+
+int	closer(void) 
 {
 	exit(0);
 }
@@ -89,6 +71,15 @@ void	print_mandatori(t_opt *opt)
 	}
 }
 
+int	draw_all(t_opt *opt)
+{
+	print_mandatori(opt);
+	print_minimap(opt);
+	mlx_put_image_to_window(opt->mlx, opt->win, opt->mand->img, 0, 0);
+	mlx_put_image_to_window(opt->mlx, opt->win, opt->minimap->img, DELTA, DELTA);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_opt	opt;
@@ -98,12 +89,8 @@ int	main(int argc, char **argv)
 	ft_parcer(&opt, argv[1]);
 	opt.x_widht = -1;
 	opt.y_heidht = -1;
-	print_mandatori(&opt);
-	print_minimap(&opt);
-	mlx_put_image_to_window(opt.mlx, opt.win, opt.mand->img, 0, 0);
-	mlx_put_image_to_window(opt.mlx, opt.win, opt.minimap->img, DELTA, DELTA);
-	// printf("x: %d	y: %d\n", opt.x_widht, opt.y_heidht);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
 	mlx_hook(opt.win, 2, 1L<<0, keyhook, &opt);
+	mlx_loop_hook(opt.mlx, draw_all, &opt);
 	mlx_loop(opt.mlx);
 }
