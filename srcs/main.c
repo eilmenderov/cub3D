@@ -12,34 +12,37 @@
 
 #include "head_cub.h"
 
+int	ft_check_p(t_map *map, t_opt *opt)
+{
+	(void)map;
+	(void)opt;
+	return (0);
+}
+
 int	keyhook(int key, t_opt *opt)
 {
 	int	step;
 
-	step = (int)PIC_SIZE * MOVE_SPEED;
-	if (key == W_KEY && opt->y_heidht > PIC_SIZE)
+	step = (int)MAP_SIZE * MOVE_SPEED;
+	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("forwad   key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 10) / PIC_SIZE)][(int)((opt->x_widht - 5) / PIC_SIZE)] != '1')
-			opt->y_heidht += (step * sin(opt->angle)), opt->x_widht += (step * cos(opt->angle));
+		opt->y_heidht += (step * sin(opt->angle));
+		opt->x_widht += (step * cos(opt->angle));
 	}
-	if (key == A_KEY && opt->x_widht > PIC_SIZE)
+	if (key == A_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("left     key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 5) / PIC_SIZE)][(int)((opt->x_widht - 10) / PIC_SIZE)] != '1')
-			opt->y_heidht -= (step * sin(opt->angle + M_PI_2)), opt->x_widht -= (step * cos(opt->angle + M_PI_2));
+		opt->y_heidht -= (step * sin(opt->angle + M_PI_2));
+		opt->x_widht -= (step * cos(opt->angle + M_PI_2));
 	}
-	if (key == S_KEY)
+	if (key == S_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("backward key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht) / PIC_SIZE)][(int)((opt->x_widht - 5) / PIC_SIZE)] != '1')
-			opt->y_heidht -= (step * sin(opt->angle)), opt->x_widht -= (step * cos(opt->angle));
+		opt->y_heidht -= (step * sin(opt->angle));
+		opt->x_widht -= (step * cos(opt->angle));
 	}
-	if (key == D_KEY)
+	if (key == D_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("right    key: %d\n", key);
-		// if (opt->map->canvas[(int)((opt->y_heidht - 5) / PIC_SIZE)][(int)((opt->x_widht) / PIC_SIZE)] != '1')
-			opt->y_heidht += (step * sin(opt->angle + M_PI_2)), opt->x_widht += (step * cos(opt->angle + M_PI_2));
+		opt->y_heidht += (step * sin(opt->angle + M_PI_2));
+		opt->x_widht += (step * cos(opt->angle + M_PI_2));
 	}
 	if (key == RL_KEY)
 		opt->angle -= M_PI / ROT_SPEED;
@@ -79,7 +82,9 @@ void	print_mandatori(t_opt *opt)
 		x = 0;
 		while (x < RES_X)
 		{
-			if (y > RES_Y * 0.5)
+			if (x < RES_X * 0.267 && y < RES_Y * 0.207)
+				mand_pixel_put(opt, x, y, 0);
+			else if (y > RES_Y * 0.5)
 				mand_pixel_put(opt, x, y, opt->map->floor);
 			else
 				mand_pixel_put(opt, x, y, opt->map->sky);
