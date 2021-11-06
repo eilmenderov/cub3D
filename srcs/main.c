@@ -54,8 +54,7 @@ int	keyhook(int key, t_opt *opt)
 }
 
 /* Добавить free */
-
-int	closer(void) 
+int	closer(void)
 {
 	exit(0);
 }
@@ -97,7 +96,8 @@ int	draw_all(t_opt *opt)
 	print_mandatori(opt);
 	print_minimap(opt);
 	mlx_put_image_to_window(opt->mlx, opt->win, opt->mand->img, 0, 0);
-	mlx_put_image_to_window(opt->mlx, opt->win, opt->minimap->img, DELTA, DELTA);
+	mlx_put_image_to_window(opt->mlx, opt->win, opt->minimap->img,
+		DELTA, DELTA);
 	return (0);
 }
 
@@ -111,7 +111,7 @@ int	main(int argc, char **argv)
 	opt.x_widht = -1;
 	opt.y_heidht = -1;
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
-	mlx_hook(opt.win, 2, 1L<<0, keyhook, &opt);
+	mlx_hook(opt.win, 2, 1L << 0, keyhook, &opt);
 	mlx_loop_hook(opt.mlx, draw_all, &opt);
 	mlx_loop(opt.mlx);
 }

@@ -12,32 +12,10 @@
 
 #include "head_cub.h"
 
-int	ft_atoi_m(const char *str)
-{
-	int					negative;
-	unsigned long long	res;
-
-	negative = 1;
-	res = 0;
-	while (*str && (*str == 32 || (*str > 8 && *str < 14)))
-		str++;
-	if (*str == '-')
-		puterror("incorrect color format(atoi_m 1)");
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str && *str >= '0' && *str <= '9' && res <= FT_ATOI_MN)
-	{
-		res = res * 10 + (*str - 48);
-		str++;
-	}
-	if ((res > FT_ATOI_MV && negative == 1) || (*str != ',' && *str != 0))
-		puterror("incorrect color format(atoi_m 2)");
-	return ((int)res * negative);
-}
-
 void	ft_pool_sprite_path(char **adress, char *line, t_map *map)
 {
 	int	i;
+	int	len;
 
 	if (*adress)
 		puterror("duplicate map sprite");
@@ -45,6 +23,9 @@ void	ft_pool_sprite_path(char **adress, char *line, t_map *map)
 		puterror("incorrect side path format");
 	map->flag += 1;
 	i = ft_skip_fw(line, ' ');
+	len = ft_strlen_m(&line[i], 0);
+	if (len < 4 || ft_strncmp(&line[i] + len - 4, ".xmp", 5))
+		puterror("incorrect sprite name, need <sprite_path.xmp>");
 	*adress = ft_strdup(&line[i]);
 }
 
@@ -63,7 +44,6 @@ void	ft_pool_collor(long *adress, char *line, t_map *map)
 	rgb[2] = ft_atoi_m(&line[i]);
 	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
 		puterror("incorrect color format");
-	// printf("r = %d	g = %d	b = %d\n", rgb[0], rgb[1], rgb[2]);
 	map->flag++;
 	*adress = ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 }
@@ -97,11 +77,16 @@ void	ft_check_line(t_map *map, char *line)
 
 void	ft_read_map(t_map *map, char *line, t_list **lst)
 {
-	if (line[0] && line[ft_strlen_m(line, 0) - 1] == '1' && map->flag == 6)
+	int	len;
+
+	len = ft_strlen_m(line, 0);
+	if (line[0] && line[len - 1] == '1' && map->flag == 6)
 		map->flag++;
 	else if (map->flag == 6)
 		return (free(line));
-	if (line[0] && line[ft_strlen_m(line, 0) - 1] == '1')
+	if ((map->flag == 8 && line[0]))
+		puterror("incorrect map field");
+	if (line[0])
 		ft_lstadd_back(lst, ft_lstnew(line));
 	else
 		free(line);
@@ -127,11 +112,38 @@ void	ft_pool_field(t_list *lst, int lst_size, t_map *map)
 	map->canvas[i] = NULL;
 }
 
+void	ft_check_str(t_opt *opt, char *line)
+{
+	int	i;
+
+	if (!line || opt->map->flag != 7)
+		return ;
+	if (!line[0])
+		opt->map->flag++;
+	i = -1;
+	while (line[++i])
+	{
+		if (!ft_ch_for_coinc(line[i], SYMBOLS))
+			puterror("incorrect symbols on the map");
+		if (opt->map->viewpos && ft_ch_for_coinc(line[i], HERO))
+			puterror("more then one hero on the map");
+		else if (!opt->map->viewpos && ft_ch_for_coinc(line[i], HERO))
+		{
+			opt->map->viewpos = line[i];
+			if (line[i] == 'N')
+				opt->angle = M_PI * 1.5;
+			else if (line[i] == 'E')
+				opt->angle = M_PI;
+			else if (line[i] == 'S')
+				opt->angle = M_PI_2;
+		}
+	}
+}
+
 void	ft_check_map(t_opt *opt, int fd, int gnl)
 {
 	char	*line;
 	t_list	*lst;
-	int		lst_size;
 
 	lst = NULL;
 	line = NULL;
@@ -143,12 +155,39 @@ void	ft_check_map(t_opt *opt, int fd, int gnl)
 		if (opt->map->flag < 6)
 			ft_check_line(opt->map, line);
 		else
+		{
+			ft_check_str(opt, line);
 			ft_read_map(opt->map, line, &lst);
+		}
 	}
-	lst_size = ft_lstsize(lst);
-	ft_pool_field(lst, lst_size, opt->map);
+	opt->map->heigh = ft_lstsize(lst);
+	ft_pool_field(lst, opt->map->heigh, opt->map);
 	ft_free_all_lst(lst);
 	close (fd);
+}
+
+void	ft_check_field(char **field, t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (field[i])
+	{
+		j = 0;
+		if ((int)ft_strlen_m(field[i], 0) == ft_how_many_char(field[i], ' '))
+			puterror("incorrect map field(spaces)");
+		while (field[i][j])
+		{
+			if (ft_ch_for_coinc(field[i][j], "NSEW0"))
+			{
+				if (!i || !field[i + 1] || !field[i][j + 1] || i == map->heigh)
+					puterror("incorrect map field");
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void	ft_parcer(t_opt *opt, char *file)
@@ -164,5 +203,6 @@ void	ft_parcer(t_opt *opt, char *file)
 		puterror("file does not exist, access denied or open error");
 	ft_init_structs(opt);
 	ft_check_map(opt, fd, 1);
+	ft_check_field(opt->map->canvas, opt->map);
 	// ft_printf_all_info(opt);
 }

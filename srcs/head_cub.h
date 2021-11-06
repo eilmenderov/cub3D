@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef HEAD_CUB_H
 # define HEAD_CUB_H
 
@@ -73,7 +72,7 @@ typedef struct s_pic
 
 typedef struct s_map
 {
-	float			h_stl;
+	int				heigh;
 
 	unsigned char	flag;
 	char			**canvas;
@@ -124,7 +123,9 @@ void	ft_printf_all_info(t_opt *opt);
 /* 1/5 utils.c */
 void	puterror(char *errorline);
 float	ft_angle(float alpha);
+int		ft_atoi_m(const char *str);
 
+/* 5/5 print_map.c */
 void	print_minimap(t_opt *opt);
 void	sizepixel(t_opt *opt, int x, int y, int color);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);

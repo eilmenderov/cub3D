@@ -28,7 +28,6 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->map->sky = -1;
 	opt->map->viewpos = 0;
 	opt->map->flag = 0;
-	opt->map->h_stl = ((RES_X / 2) * PIC_SIZE) / (tan(ANGLE / 2));
 }
 
 static void	ft_init_images(t_opt *opt)
