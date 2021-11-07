@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   head_cub.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarl <fcarl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/05 18:58:24 by fcarl            ###   ########.fr       */
+/*   Updated: 2021/11/07 13:28:42 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_pic
 typedef struct s_map
 {
 	int				heigh;
+	int				width;
 
 	unsigned char	flag;
 	char			**canvas;
@@ -105,7 +106,6 @@ typedef struct s_opt
 	void	*win;
 
 	t_img	*mand;
-	t_img	*minimap;
 	t_map	*map;
 	t_pic	*pic;
 }				t_opt;
@@ -131,7 +131,8 @@ void	sizepixel(t_opt *opt, int x, int y, int color);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 void	sizepixel_player(t_opt *opt, int x, int y, int color);
 
-/* 2/5 init.c*/
+/* 3/5 init.c*/
+void	ft_init_images(t_opt *opt);
 void	ft_init_structs(t_opt *opt);
 
 #endif

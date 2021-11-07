@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 13:47:04 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/01 18:24:21 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 13:51:54 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_how_many_char(char *str, char c);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 int		ft_abs(int a);
+double	ft_abs_f(double a);
 
 /* 2/5 get_next_line_utils.c */
 int		ft_gnl_cheker(char *ost);

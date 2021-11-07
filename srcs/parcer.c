@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/05 14:25:10 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 12:51:35 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	ft_read_map(t_map *map, char *line, t_list **lst)
 		return (free(line));
 	if ((map->flag == 8 && line[0]))
 		puterror("incorrect map field");
+	if (len > map->width)
+		map->width = len;
 	if (line[0])
 		ft_lstadd_back(lst, ft_lstnew(line));
 	else
@@ -204,5 +206,6 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_init_structs(opt);
 	ft_check_map(opt, fd, 1);
 	ft_check_field(opt->map->canvas, opt->map);
+	ft_init_images(opt);
 	// ft_printf_all_info(opt);
 }

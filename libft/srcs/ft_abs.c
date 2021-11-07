@@ -6,11 +6,18 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 09:47:48 by vleida            #+#    #+#             */
-/*   Updated: 2021/10/29 09:47:48 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 13:51:45 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_abs(int a)
+{
+	if (a < 0)
+		return (-a);
+	return (a);
+}
+
+double	ft_abs_f(double a)
 {
 	if (a < 0)
 		return (-a);
