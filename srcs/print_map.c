@@ -40,8 +40,8 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	end = start + ANGLE;
 	while (start < end)
 	{
-		x = opt->x_widht - diff / 2;
-		y = opt->y_heidht - diff / 2;
+		x = opt->x_widht * MAP_SIZE - diff / 2;
+		y = opt->y_heidht * MAP_SIZE - diff / 2;
 		while (opt->map->canvas[(int)(y / MAP_SIZE)][(int)(x / MAP_SIZE)] != '1')
 		{
 			x += cos(start - ANGLE * 0.5);
@@ -114,8 +114,6 @@ void	print_minimap(t_opt *opt)
 				sizepixel(opt, step_x, step_y, 0x708090);
 				if (ft_ch_for_coinc(opt->map->canvas[y][x], HERO))
 				{
-					opt->x_widht = step_x;
-					opt->y_heidht = step_y;
 					opt->map->viewpos = opt->map->canvas[y][x];
 					opt->map->canvas[y][x] = '0';
 				}
@@ -124,5 +122,5 @@ void	print_minimap(t_opt *opt)
 		}
 		step_y += MAP_SIZE;
 	}
-	sizepixel_player(opt, (int)opt->x_widht, (int)opt->y_heidht, 0xFF0000);
+	sizepixel_player(opt, (int)(opt->x_widht * MAP_SIZE), (int)(opt->y_heidht * MAP_SIZE), 0xFF0000);
 }

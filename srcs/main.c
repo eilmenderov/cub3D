@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:14:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/07 14:47:14 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 16:32:25 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	ft_check_p(t_map *map, t_opt *opt)
 
 int	keyhook(int key, t_opt *opt)
 {
-	int	step;
+	float	step;
 
-	step = (int)MAP_SIZE * MOVE_SPEED;
+	step = MOVE_SPEED;
 	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
 		opt->y_heidht += (step * sin(opt->angle));
@@ -99,49 +99,17 @@ void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color)
 	}
 }
 
-#define screenWidth 640
-#define screenHeight 480
-#define mapWidth 24
-#define mapHeight 24
-
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
-
 void	lodev(t_opt *opt)
 {
-	// double posX = (double)opt->x_widht, posY = (double)opt->y_heidht;
-	double posX = 22, posY = 12;
-	double	dirX = sin(opt->angle);
-	double	dirY = cos(opt->angle);
+	double posX = (double)opt->x_widht, posY = (double)opt->y_heidht;
+	// printf("x: %f	y: %f\n",  posX, posY); exit(0);
+	// double posX = 22, posY = 12;
+	double	dirX = cos(opt->angle * 0.5);
+	double	dirY = sin(opt->angle * 0.5);
 	// double dirX = -1, dirY = 0;
-	double planeX = 0, planeY = 0.66;
-	double	w = screenWidth;
-	double	h = screenHeight;
+	double planeX = 0, planeY = ANGLE * 0.5;
+	double	w = RES_X;
+	double	h = RES_Y;
 	int x;
 
 	x = 0;
@@ -192,8 +160,6 @@ void	lodev(t_opt *opt)
 			sideDistY = (mapY + 1.0 - posY) * deltaDistY;
 		}
 		//perform DDA
-		// printf("stepX: %d	stepY: %d	deltaDistX: %f	deltaDistY: %f	sideDistX: %f	sideDistY: %f\n",
-		// 		stepX, stepY, deltaDistX, deltaDistY, sideDistX, sideDistY), exit(0);
 		while(hit == 0)
 		{
 			//jump to next map square, either in x-direction, or in y-direction
@@ -209,8 +175,13 @@ void	lodev(t_opt *opt)
 				mapY += stepY;
 				side = 1;
 			}
+			// printf("mapX: %d	mapY: %d\n", mapX, mapY);
+			// printf("stepX: %d	stepY: %d	deltaDistX: %f	deltaDistY: %f	sideDistX: %f	sideDistY: %f\n",
+			// 	stepX, stepY, deltaDistX, deltaDistY, sideDistX, sideDistY);
 			//Check if ray has hit a wall
-			if(worldMap[mapX][mapY] > 0)
+			// if(worldMap[mapX][mapY] > 0)
+			// 	hit = 1;
+			if(opt->map->canvas[mapX][mapY] == '1')
 				hit = 1;
 		}
 		if (side == 0)
@@ -257,8 +228,10 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		puterror("incorrect arguments, need only one");
 	ft_parcer(&opt, argv[1]);
-	opt.x_widht = -1;
-	opt.y_heidht = -1;
+	// opt.x_widht = -1;
+	// opt.y_heidht = -1;
+	print_minimap(&opt);
+	// printf("x: %f	y: %f\n",  opt.x_widht, opt.y_heidht), exit(0);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
 	mlx_hook(opt.win, 2, 1L << 0, keyhook, &opt);
 	mlx_loop_hook(opt.mlx, draw_all, &opt);

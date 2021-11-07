@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/07 13:28:42 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 16:30:09 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # define RES_X			1280
 # define RES_Y			720
 # define REYS			100
-# define ANGLE			1.57
+# define ANGLE			0.99
 # define DELIM			10
-# define ROT_SPEED		45
-# define MOVE_SPEED		0.15
+# define ROT_SPEED		90
+# define MOVE_SPEED		0.1
 
 /* color */
 # define COLOR_TEXT			0xEAEAEA

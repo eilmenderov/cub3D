@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/07 12:51:35 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/07 15:50:51 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	ft_pool_field(t_list *lst, int lst_size, t_map *map)
 	{
 		map->canvas[i] = tmp->content;
 		tmp->content = NULL;
+		if (ft_ch_for_coinc(map->canvas[i][(int)map->opt->x_widht], HERO))
+			map->opt->y_heidht = i;
 		tmp = tmp->next;
 		i++;
 	}
@@ -132,6 +134,7 @@ void	ft_check_str(t_opt *opt, char *line)
 		else if (!opt->map->viewpos && ft_ch_for_coinc(line[i], HERO))
 		{
 			opt->map->viewpos = line[i];
+			opt->x_widht = i;
 			if (line[i] == 'N')
 				opt->angle = M_PI * 1.5;
 			else if (line[i] == 'E')
@@ -207,5 +210,5 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_check_map(opt, fd, 1);
 	ft_check_field(opt->map->canvas, opt->map);
 	ft_init_images(opt);
-	// ft_printf_all_info(opt);
+	ft_printf_all_info(opt);
 }
