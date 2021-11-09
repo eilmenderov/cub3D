@@ -46,7 +46,7 @@ void	ft_cast_rays(t_opt *opt, int diff)
 		{
 			x += cos(start - ANGLE * 0.5);
 			y += sin(start - ANGLE * 0.5);
-			my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
+			// my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 		}
 		start += (ANGLE / REYS);
 	}
