@@ -108,12 +108,34 @@ void	ft_pool_field(t_list *lst, int lst_size, t_map *map)
 	{
 		map->canvas[i] = tmp->content;
 		tmp->content = NULL;
-		if (ft_ch_for_coinc(map->canvas[i][(int)map->opt->plr->pos_x], HERO))
-			map->opt->plr->pos_y = i;
+		if (ft_ch_for_coinc(map->canvas[i][(int)map->opt->plr->pos.x], HERO))
+			map->opt->plr->pos.y = i;
 		tmp = tmp->next;
 		i++;
 	}
 	map->canvas[i] = NULL;
+}
+
+void	direction_init(t_vector *dir, char c)
+{
+	if (c == 'N' || c == 'S')
+	{
+		if (c == 'S')
+			dir->y = 1;
+		else
+			dir->y = -1;
+	}
+	else
+		dir->y = 0;
+	if (c == 'E' || c == 'W')
+	{
+		if (c == 'E')
+			dir->x = 1;
+		else
+			dir->x = -1;
+	}
+	else
+		dir->x = 0;
 }
 
 void	ft_check_str(t_opt *opt, char *line)
@@ -134,13 +156,8 @@ void	ft_check_str(t_opt *opt, char *line)
 		else if (!opt->map->viewpos && ft_ch_for_coinc(line[i], HERO))
 		{
 			opt->map->viewpos = line[i];
-			opt->plr->pos_x = i;
-			if (line[i] == 'N')
-				opt->plr->angle = M_PI * 1.5;
-			else if (line[i] == 'E')
-				opt->plr->angle = M_PI;
-			else if (line[i] == 'S')
-				opt->plr->angle = M_PI_2;
+			opt->plr->pos.x = i;
+			direction_init(&opt->plr->dir, line[i]);
 		}
 	}
 }
@@ -176,8 +193,8 @@ void	ft_plane(t_player *player)
 	double	tmp;
 
 	tmp = tan(FOV * M_PI / 360);
-	player->planeX = -sin(player->angle) * tmp;
-	player->planeY = cos(player->angle) * tmp;
+	player->plane.x = -player->dir.y * tmp;
+	player->plane.y = player->dir.x * tmp;
 }
 
 void	ft_check_field(char **field, t_map *map)

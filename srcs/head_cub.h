@@ -32,7 +32,7 @@
 # define ANGLE			1.484
 # define FOV			85.0
 # define DELIM			10
-# define ROT_SPEED		90
+# define ROT_SPEED		0.50
 # define MOVE_SPEED		0.1
 
 /* color */
@@ -105,11 +105,14 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	double	angle;
-	double	planeX;
-	double	planeY;
-	double	pos_x;
-	double	pos_y;
+	t_vector	plane;
+	t_vector	pos;
+	t_vector	dir;
+	double		angle;
+	// double	planeX;
+	// double	planeY;
+	// double	pos_x;
+	// double	pos_y;
 }				t_player;
 
 typedef struct s_dist

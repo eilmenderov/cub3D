@@ -19,30 +19,86 @@ int	ft_check_p(t_map *map, t_opt *opt)
 	return (0);
 }
 
-int	keyhook(int key, t_opt *opt)
+int	keypress(int key, t_opt *opt)
 {
 	float	step;
 
 	step = MOVE_SPEED;
 	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos_y += (step * sin(opt->plr->angle));
-		opt->plr->pos_x += (step * cos(opt->plr->angle));
+		// printf("%c\n", opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)]);
+		// if(opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
+			opt->plr->pos.x += opt->plr->dir.x * MOVE_SPEED;
+		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y + opt->plr->dir.y * MOVE_SPEED)] == '0')
+			opt->plr->pos.y += opt->plr->dir.y * MOVE_SPEED;
+	}
+	// if (key == A_KEY && !ft_check_p(opt->map, opt))
+	// {
+	// 	opt->plr->pos.y -= (step * sin(opt->plr->angle + M_PI_2));
+	// 	opt->plr->pos.x -= (step * cos(opt->plr->angle + M_PI_2));
+	// }
+	if (key == S_KEY && !ft_check_p(opt->map, opt))
+	{
+		// printf("%c\n", opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)]);
+		// if(opt->map->canvas[(int)(opt->plr->pos.x - opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
+			opt->plr->pos.x -= opt->plr->dir.x * MOVE_SPEED;
+		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y - opt->plr->dir.y * MOVE_SPEED)] == '0')
+			opt->plr->pos.y -= opt->plr->dir.y * MOVE_SPEED;
+	}
+	// if (key == D_KEY && !ft_check_p(opt->map, opt))
+	// {
+	// 	opt->plr->pos.y += (step * sin(opt->plr->angle + M_PI_2));
+	// 	opt->plr->pos.x += (step * cos(opt->plr->angle + M_PI_2));
+	// }
+	if (key == RL_KEY)
+	{
+		double	oldDirX = opt->plr->dir.x;
+		opt->plr->dir.x = opt->plr->dir.x * cos(ROT_SPEED) - opt->plr->dir.y * sin(ROT_SPEED);
+		opt->plr->dir.x = oldDirX * sin(ROT_SPEED) + opt->plr->dir.y * cos(ROT_SPEED);
+		double oldPlaneX = opt->plr->plane.x;
+		opt->plr->plane.x = opt->plr->plane.x * cos(ROT_SPEED) - opt->plr->plane.y * sin(ROT_SPEED);
+		opt->plr->plane.y = oldPlaneX * sin(ROT_SPEED) - opt->plr->plane.y * cos(ROT_SPEED);
+	}
+	if (key == RR_KEY)
+	{
+		double	oldDirX = opt->plr->dir.x;
+		opt->plr->dir.x = opt->plr->dir.x * cos(-ROT_SPEED) - opt->plr->dir.y * sin(-ROT_SPEED);
+		opt->plr->dir.x = oldDirX * sin(-ROT_SPEED) + opt->plr->dir.y * cos(-ROT_SPEED);
+		double oldPlaneX = opt->plr->plane.x;
+		opt->plr->plane.x = opt->plr->plane.x * cos(-ROT_SPEED) - opt->plr->plane.y * sin(-ROT_SPEED);
+		opt->plr->plane.y = oldPlaneX * sin(-ROT_SPEED) - opt->plr->plane.y * cos(-ROT_SPEED);
+	}
+	if (key == 53)
+		exit(0);
+	return (key);
+}
+
+int	keyrelease(int key, t_opt *opt)
+{
+	float	step;
+
+	step = MOVE_SPEED;
+	if (key == W_KEY && !ft_check_p(opt->map, opt))
+	{
+		if(opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
+			opt->plr->pos.x += opt->plr->dir.x * MOVE_SPEED;
+		if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y + opt->plr->dir.y * MOVE_SPEED)] == '0')
+			opt->plr->pos.y += opt->plr->dir.y * MOVE_SPEED;
 	}
 	if (key == A_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos_y -= (step * sin(opt->plr->angle + M_PI_2));
-		opt->plr->pos_x -= (step * cos(opt->plr->angle + M_PI_2));
+		opt->plr->pos.y -= (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos.x -= (step * cos(opt->plr->angle + M_PI_2));
 	}
 	if (key == S_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos_y -= (step * sin(opt->plr->angle));
-		opt->plr->pos_x -= (step * cos(opt->plr->angle));
+		opt->plr->pos.y -= (step * sin(opt->plr->angle));
+		opt->plr->pos.x -= (step * cos(opt->plr->angle));
 	}
 	if (key == D_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos_y += (step * sin(opt->plr->angle + M_PI_2));
-		opt->plr->pos_x += (step * cos(opt->plr->angle + M_PI_2));
+		opt->plr->pos.y += (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos.x += (step * cos(opt->plr->angle + M_PI_2));
 	}
 	if (key == RL_KEY)
 		opt->plr->angle -= M_PI / ROT_SPEED;
@@ -111,7 +167,8 @@ int	main(int argc, char **argv)
 	print_minimap(&opt);
 	// printf("x: %f	y: %f\n",  opt.x_widht, opt.plr->pos_y), exit(0);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
-	mlx_hook(opt.win, 2, 1L << 0, keyhook, &opt);
+	mlx_hook(opt.win, 2, 1L << 0, keypress, &opt);
+	// mlx_hook(opt.win, 3, 1L << 0, keyrelease, &opt);
 	mlx_loop_hook(opt.mlx, draw_all, &opt);
 	mlx_loop(opt.mlx);
 }

@@ -17,15 +17,15 @@ void	ft_cast_one_ray(t_opt *opt, int diff)
 	float	full_angle;
 
 	full_angle = opt->plr->angle * 0.5;
-	x = opt->plr->pos_x - diff / 2;
-	y = opt->plr->pos_y - diff / 2;
+	x = opt->plr->pos.x - diff / 2;
+	y = opt->plr->pos.y - diff / 2;
 	while (opt->map->canvas[(int)(y / PIC_SIZE)][(int)(x / PIC_SIZE)] != '1')
 	{
 		x += cos(full_angle);
 		y += sin(full_angle);
 		my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
 	}
-	l = sqrt(pow(opt->plr->pos_x - x, 2) + pow(opt->plr->pos_y - y, 2));
+	l = sqrt(pow(opt->plr->pos.x - x, 2) + pow(opt->plr->pos.y - y, 2));
 }
 
 void	ft_cast_rays(t_opt *opt, int diff)
@@ -40,8 +40,8 @@ void	ft_cast_rays(t_opt *opt, int diff)
 	end = start + ANGLE;
 	while (start < end)
 	{
-		x = opt->plr->pos_x * MAP_SIZE - diff / 2;
-		y = opt->plr->pos_y * MAP_SIZE - diff / 2;
+		x = opt->plr->pos.x * MAP_SIZE - diff / 2;
+		y = opt->plr->pos.y * MAP_SIZE - diff / 2;
 		while (opt->map->canvas[(int)(y / MAP_SIZE)][(int)(x / MAP_SIZE)] != '1')
 		{
 			x += cos(start - ANGLE * 0.5);
@@ -122,5 +122,5 @@ void	print_minimap(t_opt *opt)
 		}
 		step_y += MAP_SIZE;
 	}
-	sizepixel_player(opt, (int)(opt->plr->pos_x * MAP_SIZE), (int)(opt->plr->pos_y * MAP_SIZE), 0xFF0000);
+	sizepixel_player(opt, (int)(opt->plr->pos.x * MAP_SIZE), (int)(opt->plr->pos.y * MAP_SIZE), 0xFF0000);
 }

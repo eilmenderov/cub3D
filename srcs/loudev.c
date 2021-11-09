@@ -13,27 +13,27 @@ void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr)
 {
 	dist->deltaDistX = fabs(1 / ray.x);
 	dist->deltaDistY = fabs(1 / ray.y);
-	dist->x = (int)plr->pos_x;
-	dist->y = (int)plr->pos_y;
+	dist->x = (int)plr->pos.x;
+	dist->y = (int)plr->pos.y;
 	if (ray.x > 0)
 	{
 		dist->stepX = 1;
-		dist->sideDistX = (ceil(plr->pos_x) - plr->pos_x) * dist->deltaDistX;
+		dist->sideDistX = (ceil(plr->pos.x) - plr->pos.x) * dist->deltaDistX;
 	}
 	else
 	{
 		dist->stepX = -1;
-		dist->sideDistX = (plr->pos_x - floor(plr->pos_x)) * dist->deltaDistX;
+		dist->sideDistX = (plr->pos.x - floor(plr->pos.x)) * dist->deltaDistX;
 	}
 	if (ray.y > 0)
 	{
 		dist->stepY = 1;
-		dist->sideDistY = (ceil(plr->pos_y) - plr->pos_y) * dist->deltaDistY;
+		dist->sideDistY = (ceil(plr->pos.y) - plr->pos.y) * dist->deltaDistY;
 	}
 	else
 	{
 		dist->stepY = -1;
-		dist->sideDistY = (plr->pos_y - floor(plr->pos_y)) * dist->deltaDistY;
+		dist->sideDistY = (plr->pos.y - floor(plr->pos.y)) * dist->deltaDistY;
 	}
 }
 
@@ -61,9 +61,9 @@ double	ft_find_dist(t_vector ray, t_player *plr, char **map,char *side)
 	if (fl)
 		*side = 'H';
 	if (fl)
-		return ((dist.x - plr->pos_x + (1 - dist.stepX) / 2) / ray.x);
+		return ((dist.x - plr->pos.x + (1 - dist.stepX) / 2) / ray.x);
 	*side = 'V';
-	return ((dist.y - plr->pos_y + (1 - dist.stepY) / 2) / ray.y);
+	return ((dist.y - plr->pos.y + (1 - dist.stepY) / 2) / ray.y);
 }
 
 t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
@@ -76,7 +76,7 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
 	// printf("dist: %f\n", dist);
 	if (side == 'V')
 	{
-		trash.x = plr->pos_x + dist * ray.x;
+		trash.x = plr->pos.x + dist * ray.x;
 		if (ray.y > 0)
 			*tex = 'N';
 		else
@@ -84,7 +84,7 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
 	}
 	else if (side == 'H')
 	{
-		trash.x = plr->pos_y + dist * ray.y;
+		trash.x = plr->pos.y + dist * ray.y;
 		if (ray.x > 0)
 			*tex = 'W';
 		else
@@ -120,7 +120,7 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
 	finish = RES_Y - start;
 	p_x = (int)((double)SPRITE_SIZE * trash.x);
 	pos = (start + ((int)trash.y - RES_Y) / 2) * step;
-	color = COLOR_GOLD;
+	color = COLOR_RED;
 	if (tex == 'N')
 		color = COLOR_TEXT;
 	else if (tex == 'S')
@@ -130,6 +130,7 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
 	// (void)opt;
 	// (void)x;
 	// (void)tex;
+	// printf("%f\n", trash.y);
 	// printf("start: %d	finish %d	pos: %f	step: %f\n", start, finish, pos, step);
 	while (start < finish)
 	{
@@ -154,9 +155,8 @@ void	ft_draw_walls(t_opt *opt)
 	while (x < RES_X)
 	{
 		cameraX = 2 * (double)x / (double)RES_X - 1;
-		ray.x = cos(opt->plr->angle) + opt->plr->planeX * cameraX;
-		ray.y = sin(opt->plr->angle) + opt->plr->planeY * cameraX;
-		// printf("camera: %f	x: %f	y: %f\n", cameraX, ray.x, ray.y);
+		ray.x = opt->plr->dir.x + opt->plr->plane.x * cameraX;
+		ray.y = opt->plr->dir.y + opt->plr->plane.y * cameraX;
 		trash = get_tex_data(ray, opt->plr, opt, &tex);
 		// printf("tes: %p\n", tex);
 		// printf("bef - x: %f	y: %f\n", trash.x, trash.y);
@@ -171,7 +171,7 @@ void	ft_draw_walls(t_opt *opt)
 
 void	lodev(t_opt *opt)
 {
-	double posX = (double)opt->plr->pos_x, posY = (double)opt->plr->pos_y;
+	double posX = (double)opt->plr->pos.x, posY = (double)opt->plr->pos.y;
 	// printf("x: %f	y: %f\n",  posX, posY); exit(0);
 	// double posX = 22, posY = 12;
 	double	dirX = cos(opt->plr->angle * 0.5);
