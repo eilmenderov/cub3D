@@ -16,9 +16,9 @@ static void	ft_init_opt_map(t_opt *opt)
 {
 	opt->pic->opt = opt;
 	opt->map->opt = opt;
-	opt->x_widht = PIC_SIZE;
-	opt->y_heidht = PIC_SIZE;
-	opt->angle = 0;
+	opt->plr->pos_x = PIC_SIZE;
+	opt->plr->pos_y = PIC_SIZE;
+	opt->plr->angle = 0;
 	opt->map->canvas = NULL;
 	opt->map->path_n = NULL;
 	opt->map->path_s = NULL;
@@ -59,5 +59,8 @@ void	ft_init_structs(t_opt *opt)
 	opt->win = mlx_new_window(opt->mlx, RES_X, RES_Y, "cub3d");
 	if (!opt->win)
 		puterror("can't create game window");
+	opt->plr = malloc(sizeof(t_player));
+	if (!opt->plr)
+		puterror("can't allocate memory(plr)");
 	ft_init_opt_map(opt);
 }

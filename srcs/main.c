@@ -26,28 +26,28 @@ int	keyhook(int key, t_opt *opt)
 	step = MOVE_SPEED;
 	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->y_heidht += (step * sin(opt->angle));
-		opt->x_widht += (step * cos(opt->angle));
+		opt->plr->pos_y += (step * sin(opt->plr->angle));
+		opt->plr->pos_x += (step * cos(opt->plr->angle));
 	}
 	if (key == A_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->y_heidht -= (step * sin(opt->angle + M_PI_2));
-		opt->x_widht -= (step * cos(opt->angle + M_PI_2));
+		opt->plr->pos_y -= (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos_x -= (step * cos(opt->plr->angle + M_PI_2));
 	}
 	if (key == S_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->y_heidht -= (step * sin(opt->angle));
-		opt->x_widht -= (step * cos(opt->angle));
+		opt->plr->pos_y -= (step * sin(opt->plr->angle));
+		opt->plr->pos_x -= (step * cos(opt->plr->angle));
 	}
 	if (key == D_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->y_heidht += (step * sin(opt->angle + M_PI_2));
-		opt->x_widht += (step * cos(opt->angle + M_PI_2));
+		opt->plr->pos_y += (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos_x += (step * cos(opt->plr->angle + M_PI_2));
 	}
 	if (key == RL_KEY)
-		opt->angle -= M_PI / ROT_SPEED;
+		opt->plr->angle -= M_PI / ROT_SPEED;
 	if (key == RR_KEY)
-		opt->angle += M_PI / ROT_SPEED;
+		opt->plr->angle += M_PI / ROT_SPEED;
 	if (key == 53)
 		exit(0);
 	return (key);
@@ -89,133 +89,11 @@ void	print_mandatori(t_opt *opt)
 	}
 }
 
-void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color)
-{
-	while (drawStart < drawEnd)
-	{
-		// printf("start: %d end: %d\n", drawStart, drawEnd);
-		my_mlx_pixel_put(opt, x, drawStart, color);
-		drawStart++;
-	}
-}
-
-void	lodev(t_opt *opt)
-{
-	double posX = (double)opt->x_widht, posY = (double)opt->y_heidht;
-	// printf("x: %f	y: %f\n",  posX, posY); exit(0);
-	// double posX = 22, posY = 12;
-	double	dirX = cos(opt->angle * 0.5);
-	double	dirY = sin(opt->angle * 0.5);
-	// double dirX = -1, dirY = 0;
-	double planeX = 0, planeY = ANGLE * 0.5;
-	double	w = RES_X;
-	double	h = RES_Y;
-	int x;
-
-	x = 0;
-	while (x < w)
-	{
-		//calculate ray position and direction
-		double cameraX = 2 * x / w - 1; //x-coordinate in camera space
-		double rayDirX = dirX + planeX * cameraX;
-		double rayDirY = dirY + planeY * cameraX;
-		
-		//which box of the map we're in
-		int mapX = (int)posX;
-		int mapY = (int)posY;
-		
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-		double deltaDistX = (rayDirX == 0) ? 1e30 : ft_abs_f(1 / rayDirX);
-		double deltaDistY = (rayDirY == 0) ? 1e30 : ft_abs_f(1 / rayDirY);
-
-		double perpWallDist;
-		
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-		//calculate step and initial sideDist
-		if(rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-		}
-		if(rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-		}
-		//perform DDA
-		while(hit == 0)
-		{
-			//jump to next map square, either in x-direction, or in y-direction
-			if(sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			// printf("mapX: %d	mapY: %d\n", mapX, mapY);
-			// printf("stepX: %d	stepY: %d	deltaDistX: %f	deltaDistY: %f	sideDistX: %f	sideDistY: %f\n",
-			// 	stepX, stepY, deltaDistX, deltaDistY, sideDistX, sideDistY);
-			//Check if ray has hit a wall
-			// if(worldMap[mapX][mapY] > 0)
-			// 	hit = 1;
-			if(opt->map->canvas[mapX][mapY] == '1')
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
-		
-		//Calculate height of line to draw on screen
-		// printf("perpWallDist: %f\n", perpWallDist), exit(0);
-		int lineHeight = (int)(h / perpWallDist);
-		// printf("lineHeight: %d\n", lineHeight), exit(0);
-		
-		//calculate lowest and higest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + h / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-		int drawEnd = lineHeight / 2 + h / 2;
-		if(drawEnd >= h)
-			drawEnd = h - 1;
-		
-		//choose wall color
-		int	color = COLOR_RED;
-		//give x and y sides different brightness
-		if (side == 1)
-			color = color / 2;
-		draw_line(opt, x, drawStart, drawEnd, color);
-		x++;
-	}
-}
-
 int	draw_all(t_opt *opt)
 {
 	print_mandatori(opt);
-	lodev(opt);
+	ft_draw_walls(opt);
+	// lodev(opt);
 	print_minimap(opt);
 	mlx_put_image_to_window(opt->mlx, opt->win, opt->mand->img, 0, 0);
 	return (0);
@@ -229,9 +107,9 @@ int	main(int argc, char **argv)
 		puterror("incorrect arguments, need only one");
 	ft_parcer(&opt, argv[1]);
 	// opt.x_widht = -1;
-	// opt.y_heidht = -1;
+	// opt.plr->pos_y = -1;
 	print_minimap(&opt);
-	// printf("x: %f	y: %f\n",  opt.x_widht, opt.y_heidht), exit(0);
+	// printf("x: %f	y: %f\n",  opt.x_widht, opt.plr->pos_y), exit(0);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
 	mlx_hook(opt.win, 2, 1L << 0, keyhook, &opt);
 	mlx_loop_hook(opt.mlx, draw_all, &opt);

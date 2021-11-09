@@ -108,8 +108,8 @@ void	ft_pool_field(t_list *lst, int lst_size, t_map *map)
 	{
 		map->canvas[i] = tmp->content;
 		tmp->content = NULL;
-		if (ft_ch_for_coinc(map->canvas[i][(int)map->opt->x_widht], HERO))
-			map->opt->y_heidht = i;
+		if (ft_ch_for_coinc(map->canvas[i][(int)map->opt->plr->pos_x], HERO))
+			map->opt->plr->pos_y = i;
 		tmp = tmp->next;
 		i++;
 	}
@@ -134,13 +134,13 @@ void	ft_check_str(t_opt *opt, char *line)
 		else if (!opt->map->viewpos && ft_ch_for_coinc(line[i], HERO))
 		{
 			opt->map->viewpos = line[i];
-			opt->x_widht = i;
+			opt->plr->pos_x = i;
 			if (line[i] == 'N')
-				opt->angle = M_PI * 1.5;
+				opt->plr->angle = M_PI * 1.5;
 			else if (line[i] == 'E')
-				opt->angle = M_PI;
+				opt->plr->angle = M_PI;
 			else if (line[i] == 'S')
-				opt->angle = M_PI_2;
+				opt->plr->angle = M_PI_2;
 		}
 	}
 }
@@ -171,6 +171,15 @@ void	ft_check_map(t_opt *opt, int fd, int gnl)
 	close (fd);
 }
 
+void	ft_plane(t_player *player)
+{
+	double	tmp;
+
+	tmp = tan(FOV * M_PI / 360);
+	player->planeX = -sin(player->angle) * tmp;
+	player->planeY = cos(player->angle) * tmp;
+}
+
 void	ft_check_field(char **field, t_map *map)
 {
 	int	i;
@@ -195,6 +204,25 @@ void	ft_check_field(char **field, t_map *map)
 	}
 }
 
+void	ft_load_xmp(void *mlx, void **img, char *file)
+{
+	int	fl[2];
+
+	*img = mlx_xpm_file_to_image(mlx, file, &fl[0], &fl[1]);
+	if (!*img)
+		puterror(ft_strjoin("can not read xmp file ", file));
+	if (fl[0] != SPRITE_SIZE || fl[0] != fl[1])
+		puterror(ft_strjoin("incorrect xmp size ", file));
+}
+
+void	ft_init_sprites(t_opt *opt, t_map *map)
+{
+	ft_load_xmp(opt->mlx, &opt->pic->wall_e, map->path_e);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_s, map->path_s);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_n, map->path_n);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_w, map->path_w);
+}
+
 void	ft_parcer(t_opt *opt, char *file)
 {
 	int	fd;
@@ -210,5 +238,7 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_check_map(opt, fd, 1);
 	ft_check_field(opt->map->canvas, opt->map);
 	ft_init_images(opt);
+	ft_init_sprites(opt, opt->map);
 	ft_printf_all_info(opt);
+	ft_plane(opt->plr);
 }

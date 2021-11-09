@@ -19,7 +19,7 @@ void	puterror(char *errorline)
 	exit(1);
 }
 
-float	ft_angle(float alpha)
+double	ft_angle(double alpha)
 {
 	if (alpha <= 0)
 		alpha += M_PI * 2;

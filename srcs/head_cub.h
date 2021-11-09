@@ -29,7 +29,8 @@
 # define RES_X			1280
 # define RES_Y			720
 # define REYS			100
-# define ANGLE			0.99
+# define ANGLE			1.484
+# define FOV			85.0
 # define DELIM			10
 # define ROT_SPEED		90
 # define MOVE_SPEED		0.1
@@ -59,6 +60,12 @@
 # define WALL		'1'
 # define HERO		"NSEW"
 # define SYMBOLS	"NSEW 01"
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}				t_vector;
 
 typedef struct s_pic
 {
@@ -96,18 +103,36 @@ typedef struct s_img
 	int		endian;
 }				t_img;
 
+typedef struct s_player
+{
+	double	angle;
+	double	planeX;
+	double	planeY;
+	double	pos_x;
+	double	pos_y;
+}				t_player;
+
+typedef struct s_dist
+{
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	int		stepX;
+	int		stepY;
+	int		x;
+	int		y;
+}				t_dist;
+
 typedef struct s_opt
 {
-	float	x_widht;
-	float	y_heidht;
-	float	angle;
+	void		*mlx;
+	void		*win;
 
-	void	*mlx;
-	void	*win;
-
-	t_img	*mand;
-	t_map	*map;
-	t_pic	*pic;
+	t_img		*mand;
+	t_map		*map;
+	t_player	*plr;
+	t_pic		*pic;
 }				t_opt;
 
 /* 6/5 main.c */
@@ -122,7 +147,7 @@ void	ft_printf_all_info(t_opt *opt);
 
 /* 1/5 utils.c */
 void	puterror(char *errorline);
-float	ft_angle(float alpha);
+double	ft_angle(double alpha);
 int		ft_atoi_m(const char *str);
 
 /* 5/5 print_map.c */
@@ -134,5 +159,10 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color);
 /* 3/5 init.c*/
 void	ft_init_images(t_opt *opt);
 void	ft_init_structs(t_opt *opt);
+
+/* 3/5 loudev.c*/
+void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);
+void	lodev(t_opt *opt);
+void	ft_draw_walls(t_opt *opt);
 
 #endif
