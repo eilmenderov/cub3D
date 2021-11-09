@@ -114,7 +114,8 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
 
 	step = (double)SPRITE_SIZE / trash.y;
 	start = (RES_Y - (int)trash.y) / 2;
-	// printf("start: %d y: %f	   step: %f\n", start, trash.y, step);
+	// if (start > 200)
+	// 	start = 100;
 	if (start < 0)
 		start = 0;
 	finish = RES_Y - start;
@@ -131,7 +132,6 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
 	// (void)x;
 	// (void)tex;
 	// printf("%f\n", trash.y);
-	// printf("start: %d	finish %d	pos: %f	step: %f\n", start, finish, pos, step);
 	while (start < finish)
 	{
 		p_y = (int)pos & (SPRITE_SIZE - 1);

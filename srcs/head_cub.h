@@ -32,8 +32,8 @@
 # define ANGLE			1.484
 # define FOV			85.0
 # define DELIM			10
-# define ROT_SPEED		0.50
-# define MOVE_SPEED		0.1
+# define ROT_SPEED		0.07
+# define MOVE_SPEED		0.10
 
 /* color */
 # define COLOR_TEXT			0xEAEAEA
@@ -144,6 +144,7 @@ void	puterror(char *errorline);
 
 /* 3/5 parcer.c */
 void	ft_parcer(t_opt *opt, char *file);
+void	ft_plane(t_player *player);
 
 /* 1/5 dev_utils.c */
 void	ft_printf_all_info(t_opt *opt);

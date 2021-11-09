@@ -26,48 +26,41 @@ int	keypress(int key, t_opt *opt)
 	step = MOVE_SPEED;
 	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("%c\n", opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)]);
-		// if(opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
-			opt->plr->pos.x += opt->plr->dir.x * MOVE_SPEED;
-		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y + opt->plr->dir.y * MOVE_SPEED)] == '0')
-			opt->plr->pos.y += opt->plr->dir.y * MOVE_SPEED;
+		opt->plr->pos.y -= (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos.x -= (step * cos(opt->plr->angle + M_PI_2));
 	}
-	// if (key == A_KEY && !ft_check_p(opt->map, opt))
-	// {
-	// 	opt->plr->pos.y -= (step * sin(opt->plr->angle + M_PI_2));
-	// 	opt->plr->pos.x -= (step * cos(opt->plr->angle + M_PI_2));
-	// }
+	if (key == D_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->plr->pos.y += (step * sin(opt->plr->angle));
+		opt->plr->pos.x += (step * cos(opt->plr->angle));
+	}
 	if (key == S_KEY && !ft_check_p(opt->map, opt))
 	{
-		// printf("%c\n", opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)]);
-		// if(opt->map->canvas[(int)(opt->plr->pos.x - opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
-			opt->plr->pos.x -= opt->plr->dir.x * MOVE_SPEED;
-		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y - opt->plr->dir.y * MOVE_SPEED)] == '0')
-			opt->plr->pos.y -= opt->plr->dir.y * MOVE_SPEED;
+		opt->plr->pos.y += (step * sin(opt->plr->angle + M_PI_2));
+		opt->plr->pos.x += (step * cos(opt->plr->angle + M_PI_2));
 	}
-	// if (key == D_KEY && !ft_check_p(opt->map, opt))
-	// {
-	// 	opt->plr->pos.y += (step * sin(opt->plr->angle + M_PI_2));
-	// 	opt->plr->pos.x += (step * cos(opt->plr->angle + M_PI_2));
-	// }
+	if (key == A_KEY && !ft_check_p(opt->map, opt))
+	{
+		opt->plr->pos.y -= (step * sin(opt->plr->angle));
+		opt->plr->pos.x -= (step * cos(opt->plr->angle));
+	}
 	if (key == RL_KEY)
 	{
-		double	oldDirX = opt->plr->dir.x;
-		opt->plr->dir.x = opt->plr->dir.x * cos(ROT_SPEED) - opt->plr->dir.y * sin(ROT_SPEED);
-		opt->plr->dir.x = oldDirX * sin(ROT_SPEED) + opt->plr->dir.y * cos(ROT_SPEED);
-		double oldPlaneX = opt->plr->plane.x;
-		opt->plr->plane.x = opt->plr->plane.x * cos(ROT_SPEED) - opt->plr->plane.y * sin(ROT_SPEED);
-		opt->plr->plane.y = oldPlaneX * sin(ROT_SPEED) - opt->plr->plane.y * cos(ROT_SPEED);
+		opt->plr->dir.x = opt->plr->dir.x * cosf(-ROT_SPEED) - opt->plr->dir.y * sinf(-ROT_SPEED);
+		opt->plr->dir.y = opt->plr->dir.x * sinf(-ROT_SPEED) + opt->plr->dir.y * cosf(-ROT_SPEED);
+		double	length = hypotf(opt->plr->dir.x, opt->plr->dir.y);
+		opt->plr->dir.x = opt->plr->dir.x / length;
+		opt->plr->dir.y = opt->plr->dir.y / length;
 	}
 	if (key == RR_KEY)
 	{
-		double	oldDirX = opt->plr->dir.x;
-		opt->plr->dir.x = opt->plr->dir.x * cos(-ROT_SPEED) - opt->plr->dir.y * sin(-ROT_SPEED);
-		opt->plr->dir.x = oldDirX * sin(-ROT_SPEED) + opt->plr->dir.y * cos(-ROT_SPEED);
-		double oldPlaneX = opt->plr->plane.x;
-		opt->plr->plane.x = opt->plr->plane.x * cos(-ROT_SPEED) - opt->plr->plane.y * sin(-ROT_SPEED);
-		opt->plr->plane.y = oldPlaneX * sin(-ROT_SPEED) - opt->plr->plane.y * cos(-ROT_SPEED);
+		opt->plr->dir.x = opt->plr->dir.x * cosf(ROT_SPEED) - opt->plr->dir.y * sinf(ROT_SPEED);
+		opt->plr->dir.y = opt->plr->dir.x * sinf(ROT_SPEED) + opt->plr->dir.y * cosf(ROT_SPEED);
+		double	length = hypotf(opt->plr->dir.x, opt->plr->dir.y);
+		opt->plr->dir.x = opt->plr->dir.x / length;
+		opt->plr->dir.y = opt->plr->dir.y / length;
 	}
+	ft_plane(opt->plr);
 	if (key == 53)
 		exit(0);
 	return (key);
