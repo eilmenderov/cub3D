@@ -26,24 +26,28 @@ int	keypress(int key, t_opt *opt)
 	step = MOVE_SPEED;
 	if (key == W_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos.y -= (step * sin(opt->plr->angle + M_PI_2));
-		opt->plr->pos.x -= (step * cos(opt->plr->angle + M_PI_2));
+		// if(opt->map->canvas[(int)(opt->plr->pos.x + opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
+			opt->plr->pos.x += opt->plr->dir.x * MOVE_SPEED;
+		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y + opt->plr->dir.y * MOVE_SPEED)] == '0')
+			opt->plr->pos.y += opt->plr->dir.y * MOVE_SPEED;
 	}
-	if (key == D_KEY && !ft_check_p(opt->map, opt))
-	{
-		opt->plr->pos.y += (step * sin(opt->plr->angle));
-		opt->plr->pos.x += (step * cos(opt->plr->angle));
-	}
+	// if (key == D_KEY && !ft_check_p(opt->map, opt))
+	// {
+	// 	opt->plr->pos.y += (step * sin(opt->plr->angle));
+	// 	opt->plr->pos.x += (step * cos(opt->plr->angle));
+	// }
 	if (key == S_KEY && !ft_check_p(opt->map, opt))
 	{
-		opt->plr->pos.y += (step * sin(opt->plr->angle + M_PI_2));
-		opt->plr->pos.x += (step * cos(opt->plr->angle + M_PI_2));
+		// if(opt->map->canvas[(int)(opt->plr->pos.x - opt->plr->dir.x * MOVE_SPEED)][(int)(opt->plr->pos.y)] == '0')
+			opt->plr->pos.x -= opt->plr->dir.x * MOVE_SPEED;
+		// if(opt->map->canvas[(int)(opt->plr->pos.x)][(int)(opt->plr->pos.y - opt->plr->dir.y * MOVE_SPEED)] == '0')
+			opt->plr->pos.y -= opt->plr->dir.y * MOVE_SPEED;
 	}
-	if (key == A_KEY && !ft_check_p(opt->map, opt))
-	{
-		opt->plr->pos.y -= (step * sin(opt->plr->angle));
-		opt->plr->pos.x -= (step * cos(opt->plr->angle));
-	}
+	// if (key == A_KEY && !ft_check_p(opt->map, opt))
+	// {
+	// 	opt->plr->pos.y -= (step * sin(opt->plr->angle));
+	// 	opt->plr->pos.x -= (step * cos(opt->plr->angle));
+	// }
 	if (key == RL_KEY)
 	{
 		opt->plr->dir.x = opt->plr->dir.x * cosf(-ROT_SPEED) - opt->plr->dir.y * sinf(-ROT_SPEED);
