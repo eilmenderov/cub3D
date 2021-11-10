@@ -34,7 +34,6 @@
 # define DELIM			10
 # define ROT_SPEED		0.07
 # define MOVE_SPEED		0.1
-# define COL_SIZE		0.3
 
 /* color */
 # define COLOR_TEXT			0xEAEAEA
@@ -171,7 +170,6 @@ void	ft_init_structs(t_opt *opt);
 
 /* 3/5 loudev.c*/
 void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);
-void	lodev(t_opt *opt);
 void	ft_draw_walls(t_opt *opt);
 
 #endif
