@@ -54,13 +54,15 @@ void	ft_cast_rays(t_opt *opt, int diff)
 
 void	sizepixel_player(t_opt *opt, int x, int y, int color)
 {
-	int	x_size;
-	int	y_size;
-	int	diff;
+	int		x_size;
+	int		y_size;
+	double	diff;
 
-	diff = MAP_SIZE - (int)(MAP_SIZE * 0.8);
+	diff = MAP_SIZE * 0.25;
 	// ft_cast_one_ray(opt, diff);
-	ft_cast_rays(opt, diff);
+	// ft_cast_rays(opt, diff);
+	y = y + diff;
+	x = x + diff;
 	y_size = y - diff;
 	while (y_size < y && y_size < RES_Y)
 	{

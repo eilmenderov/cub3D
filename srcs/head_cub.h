@@ -166,7 +166,6 @@ void	ft_init_structs(t_opt *opt);
 
 /* 3/5 loudev.c*/
 void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);
-void	lodev(t_opt *opt);
 void	ft_draw_walls(t_opt *opt);
 
 #endif
