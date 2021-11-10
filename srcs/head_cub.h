@@ -26,14 +26,15 @@
 # define PIC_SIZE		30
 # define SPRITE_SIZE	64
 # define DELTA			0
-# define RES_X			1280
-# define RES_Y			720
+# define RES_X			1920
+# define RES_Y			1080
 # define REYS			100
 # define ANGLE			1.484
 # define FOV			85.0
 # define DELIM			10
 # define ROT_SPEED		0.07
-# define MOVE_SPEED		0.10
+# define MOVE_SPEED		0.1
+# define COL_SIZE		0.3
 
 /* color */
 # define COLOR_TEXT			0xEAEAEA
@@ -54,6 +55,7 @@
 # define D_KEY			2
 # define RL_KEY			123
 # define RR_KEY			124
+# define ESC_KEY		53
 
 /* field_symbols */
 # define NONE		'0'
@@ -96,6 +98,7 @@ typedef struct s_map
 
 typedef struct s_img
 {
+	void	*ptr;
 	void	*img;
 	char	*addr;
 	int		b_p_p;
@@ -109,10 +112,10 @@ typedef struct s_player
 	t_vector	pos;
 	t_vector	dir;
 	double		angle;
-	// double	planeX;
-	// double	planeY;
-	// double	pos_x;
-	// double	pos_y;
+	int			move;
+	int			strafe;
+	int			rotate;
+	int			run;
 }				t_player;
 
 typedef struct s_dist
@@ -131,7 +134,9 @@ typedef struct s_opt
 {
 	void		*mlx;
 	void		*win;
+	int			keys;
 
+	t_img		textures[5];
 	t_img		*mand;
 	t_map		*map;
 	t_player	*plr;
