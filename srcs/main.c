@@ -42,16 +42,20 @@ int	key_press(int key, t_opt *opt)
 		if(!ft_check_p(opt->map, opt, 0, -step_y))
 			opt->plr->pos.y -= step_y;
 	}
-	// if (key == D_KEY)
-	// {
-	// 	opt->plr->pos.y += (step * sin(opt->plr->angle));
-	// 	opt->plr->pos.x += (step * cos(opt->plr->angle));
-	// }
-	// if (key == A_KEY && !ft_check_p(opt->map, opt))
-	// {
-	// 	opt->plr->pos.y -= (step * sin(opt->plr->angle));
-	// 	opt->plr->pos.x -= (step * cos(opt->plr->angle));
-	// }
+	if (key == D_KEY)
+	{
+		if(!ft_check_p(opt->map, opt, 0, step_x))
+			opt->plr->pos.y += (step_x);
+		if(!ft_check_p(opt->map, opt, -step_y, 0))
+			opt->plr->pos.x -= (step_y);
+	}
+	if (key == A_KEY)
+	{
+		if(!ft_check_p(opt->map, opt, 0, -step_x))
+			opt->plr->pos.y -= (step_x);
+		if(!ft_check_p(opt->map, opt, step_y, 0))
+			opt->plr->pos.x += (step_y);
+	}
 	if (key == RL_KEY)
 	{
 		opt->plr->dir.x = opt->plr->dir.x * cos(-ROT_SPEED) - opt->plr->dir.y * sin(-ROT_SPEED);
