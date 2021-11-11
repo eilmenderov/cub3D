@@ -33,6 +33,7 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->old_keys = -1;
 }
 
+
 void	ft_init_images(t_opt *opt)
 {
 	opt->mand = malloc(sizeof(t_img));

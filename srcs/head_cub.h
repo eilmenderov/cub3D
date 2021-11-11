@@ -32,20 +32,8 @@
 # define ANGLE			1.4835
 # define FOV			85.0
 # define DELIM			10
-# define ROT_SPEED		0.07
+# define ROT_SPEED		0.06
 # define MOVE_SPEED		0.1
-
-/* color */
-# define COLOR_TEXT			0xEAEAEA
-# define BACKGROUND			0x222222
-# define MENU_BACKGROUND	0x1E1E1E
-# define COLOR_UP			0xEF8633
-# define COLOR_RED			0xCC3333
-# define COLOR_ZERO			0x33FF00
-# define COLOR_WHITE		0xFFFFCC
-# define COLOR_DEEP			0x00CCFF
-# define COLOR_GOLD			0x705335
-# define COLOR_GREEN		0x004B49
 
 /* keys */
 # define W_KEY			13
@@ -79,10 +67,10 @@ typedef struct s_img
 
 typedef struct s_pic
 {
-	void			*wall_n;
-	void			*wall_s;
-	void			*wall_w;
-	void			*wall_e;
+	t_img			*wall_n;
+	t_img			*wall_s;
+	t_img			*wall_w;
+	t_img			*wall_e;
 
 	struct s_opt	*opt;
 }				t_pic;
@@ -136,10 +124,6 @@ typedef struct s_opt
 	int				old_keys;
 
 
-	t_img			tex_n;
-	t_img			tex_s;
-	t_img			tex_w;
-	t_img			tex_e;
 	t_img			*mand;
 	t_map			*map;
 	t_player		*plr;
@@ -168,12 +152,15 @@ void	sizepixel(t_opt *opt, int x, int y, int color);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 void	sizepixel_player(t_opt *opt, int x, int y, int color);
 
-/* 3/5 init.c*/
+/* 3/5 init.c */
 void	ft_init_images(t_opt *opt);
 void	ft_init_structs(t_opt *opt);
 
-/* 3/5 loudev.c*/
+/* 3/5 loudev.c */
 void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);
 void	ft_draw_walls(t_opt *opt);
+
+/* 3/5	move.c */
+void	move_player(t_opt *opt);
 
 #endif

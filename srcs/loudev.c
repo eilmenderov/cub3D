@@ -66,7 +66,7 @@ double	ft_find_dist(t_vector ray, t_player *plr, char **map,char *side)
 	return ((dist.y - plr->pos.y + (1 - dist.stepY) / 2) / ray.y);
 }
 
-t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
+t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 {
 	t_vector	trash;
 	double		dist;
@@ -78,17 +78,17 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
 	{
 		trash.x = plr->pos.x + dist * ray.x;
 		if (ray.y > 0)
-			*tex = 'N';
+			*tex = opt->pic->wall_n;
 		else
-			*tex = 'S';
+			*tex = opt->pic->wall_s;
 	}
 	else if (side == 'H')
 	{
 		trash.x = plr->pos.y + dist * ray.y;
 		if (ray.x > 0)
-			*tex = 'W';
+			*tex = opt->pic->wall_w;
 		else
-			*tex = 'E';
+			*tex = opt->pic->wall_e;
 	}
 	trash.x -= floor(trash.x);
 	trash.y = dist;
@@ -98,44 +98,31 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, char *tex)
 
 unsigned int *ft_get_pix(t_img *img, int x, int y)
 {
+	// printf("%d\t%d\n", x, y);
 	return ((unsigned *)(img->addr + y * img->line_length
 		+ x * (img->b_p_p / 8)));
 }
 
-void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
+void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)
 {
 	int		p_x;
 	int		p_y;
 	int		start;
 	int		finish;
-	int		color;
 	double	step;
 	double	pos;
 
 	step = (double)SPRITE_SIZE / trash.y;
 	start = (RES_Y - (int)trash.y) / 2;
-	// if (start > 200)
-	// 	start = 100;
 	if (start < 0)
 		start = 0;
 	finish = RES_Y - start;
 	p_x = (int)((double)SPRITE_SIZE * trash.x);
 	pos = (start + ((int)trash.y - RES_Y) / 2) * step;
-	color = COLOR_RED;
-	if (tex == 'N')
-		color = COLOR_TEXT;
-	else if (tex == 'S')
-		color = MENU_BACKGROUND;
-	else if (tex == 'W')
-		color = COLOR_DEEP;
-	(void)opt;
-	(void)x;
-	(void)tex;
 	while (start < finish)
 	{
 		p_y = (int)pos & (SPRITE_SIZE - 1);
-		// *ft_get_pix(opt->mand->img, x, start) = *ft_get_pix(tex, p_x, p_y);
-		my_mlx_pixel_put(opt, x, start, color);
+		my_mlx_pixel_put(opt, x, start, *ft_get_pix(tex, p_x, p_y));
 		pos += step;
 		start++;
 	}
@@ -145,7 +132,7 @@ void	ft_draw_walls(t_opt *opt)
 {
 	int			x;
 	double		cameraX;
-	char		tex;
+	t_img		*tex;
 	t_vector	ray;
 	t_vector	trash;
 

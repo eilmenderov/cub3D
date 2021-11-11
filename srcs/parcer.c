@@ -24,8 +24,8 @@ void	ft_pool_sprite_path(char **adress, char *line, t_map *map)
 	map->flag += 1;
 	i = ft_skip_fw(line, ' ');
 	len = ft_strlen_m(&line[i], 0);
-	if (len < 4 || ft_strncmp(&line[i] + len - 4, ".xmp", 5))
-		puterror("incorrect sprite name, need <sprite_path.xmp>");
+	if (len < 4 || ft_strncmp(&line[i] + len - 4, ".xpm", 5))
+		puterror("incorrect sprite name, need <sprite_path.x>");
 	*adress = ft_strdup(&line[i]);
 }
 
@@ -221,27 +221,31 @@ void	ft_check_field(char **field, t_map *map)
 	}
 }
 
-void	ft_load_xmp(void *mlx, void **img, char *file, t_img *pic)
+void	ft_load_xmp(t_opt *opt, t_img *texture, char *file)
 {
 	int	fl[2];
 
-	pic = malloc(sizeof(t_img));
-	// printf("%s\n", file);
-	*img = mlx_xpm_file_to_image(mlx, file, &fl[0], &fl[1]);
-	if (!*img)
+	if (!texture)
+		puterror("can't allocate memory(texture)");
+	texture->img = mlx_xpm_file_to_image(opt->mlx, file, &fl[0], &fl[1]);
+	if (!texture->img)
 		puterror(ft_strjoin("can not read xpm file ", file));
 	if (fl[0] != SPRITE_SIZE || fl[0] != fl[1])
 		puterror(ft_strjoin("incorrect xpm size ", file));
-	pic->addr = mlx_get_data_addr(*img, &pic->b_p_p,
-			&pic->line_length, &pic->endian);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->b_p_p,
+			&texture->line_length, &texture->endian);
 }
 
 void	ft_init_sprites(t_opt *opt, t_map *map)
 {
-	ft_load_xmp(opt->mlx, &opt->pic->wall_e, map->path_e, &opt->tex_e);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_s, map->path_s, &opt->tex_s);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_n, map->path_n, &opt->tex_n);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_w, map->path_w, &opt->tex_w);
+	opt->pic->wall_e = malloc(sizeof(t_img));
+	ft_load_xmp(opt, opt->pic->wall_e, map->path_e);
+	opt->pic->wall_s = malloc(sizeof(t_img));
+	ft_load_xmp(opt, opt->pic->wall_s, map->path_s);
+	opt->pic->wall_n = malloc(sizeof(t_img));
+	ft_load_xmp(opt, opt->pic->wall_n, map->path_n);
+	opt->pic->wall_w = malloc(sizeof(t_img));
+	ft_load_xmp(opt, opt->pic->wall_w, map->path_w);
 }
 
 void	ft_parcer(t_opt *opt, char *file)
@@ -262,7 +266,7 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_init_sprites(opt, opt->map);
 	opt->map->canvas[(int)opt->plr->pos.y][(int)opt->plr->pos.x] = '0';
 	opt->plr->angle = 0;
-	if (opt->map->viewpos == 'E')
+	if (opt->map->viewpos == 'W')
 		opt->plr->angle = M_PI;
 	if (opt->map->viewpos == 'S')
 		opt->plr->angle = M_PI / 2;
