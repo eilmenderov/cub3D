@@ -19,13 +19,17 @@ void	puterror(char *errorline)
 	exit(1);
 }
 
-double	ft_angle(double alpha)
+double	ft_angle(t_player *plr)
 {
-	if (alpha <= 0)
-		alpha += M_PI * 2;
-	if (alpha > M_PI * 2)
-		alpha -= M_PI * 2;
-	return (alpha);
+
+	// alpha = atan(plr->plane.y / plr->plane.x);
+	// alpha = plr->angle;
+	// printf("angle: %f p_x: %f p_y: %f\n", alpha, plr->plane.x, plr->plane.y);
+	if (plr->angle <= 0)
+		plr->angle += M_PI * 2;
+	if (plr->angle > M_PI * 2)
+		plr->angle -= M_PI * 2;
+	return (plr->angle);
 }
 
 int	ft_atoi_m(const char *str)

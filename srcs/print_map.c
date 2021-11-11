@@ -28,27 +28,32 @@ void	ft_cast_one_ray(t_opt *opt, int diff)
 	l = sqrt(pow(opt->plr->pos.x - x, 2) + pow(opt->plr->pos.y - y, 2));
 }
 
-void	ft_cast_rays(t_opt *opt, int diff)
+void	ft_cast_rays(t_opt *opt, double x, double y)
 {
-	float	x;
-	float	y;
-	float	start;
-	float	end;
+	double	x_s;
+	double	y_s;
+	double	start;
+	double	end;
+	double	step;
 
-	opt->plr->angle = ft_angle(opt->plr->angle);
-	start = opt->plr->angle;
+	// printf("B_angle: %f\n", opt->plr->angle);
+	// opt->plr->angle = ;
+	// printf("A_angle: %f\n", opt->plr->angle);
+	start = ft_angle(opt->plr);
 	end = start + ANGLE;
+	step = ANGLE / REYS;
+	// printf("start: %f end: %f step: %f dir_x: %f dir_y: %f\n", start, end, step, opt->plr->dir.x, opt->plr->dir.y);
 	while (start < end)
 	{
-		x = opt->plr->pos.x * MAP_SIZE - diff / 2;
-		y = opt->plr->pos.y * MAP_SIZE - diff / 2;
-		while (opt->map->canvas[(int)(y / MAP_SIZE)][(int)(x / MAP_SIZE)] != '1')
+		x_s = x;
+		y_s = y;
+		while (opt->map->canvas[(int)(y_s / MAP_SIZE)][(int)(x_s / MAP_SIZE)] != '1')
 		{
-			x += cos(start - ANGLE * 0.5);
-			y += sin(start - ANGLE * 0.5);
-			// my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
+			x_s += cos(start - ANGLE * 0.5);
+			y_s += sin(start - ANGLE * 0.5);
+			my_mlx_pixel_put(opt, (int)x_s, (int)y_s, 0x990099);
 		}
-		start += (ANGLE / REYS);
+		start += step;
 	}
 }
 
@@ -60,7 +65,7 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 
 	diff = MAP_SIZE * 0.25;
 	// ft_cast_one_ray(opt, diff);
-	// ft_cast_rays(opt, diff);
+	ft_cast_rays(opt, x, y);
 	y = y + diff;
 	x = x + diff;
 	y_size = y - diff;
@@ -111,15 +116,8 @@ void	print_minimap(t_opt *opt)
 		{
 			if (opt->map->canvas[y][x] == '1')
 				sizepixel(opt, step_x, step_y, 0xFFFFFF);
-			else if (ft_ch_for_coinc(opt->map->canvas[y][x], "0NSEW"))
-			{
+			else
 				sizepixel(opt, step_x, step_y, 0x708090);
-				if (ft_ch_for_coinc(opt->map->canvas[y][x], HERO))
-				{
-					opt->map->viewpos = opt->map->canvas[y][x];
-					opt->map->canvas[y][x] = '0';
-				}
-			}
 			step_x += MAP_SIZE;
 		}
 		step_y += MAP_SIZE;

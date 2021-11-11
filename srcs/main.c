@@ -111,6 +111,7 @@ void	move_player(t_opt *opt)
 		opt->plr->dir.x = opt->plr->dir.x / length;
 		opt->plr->dir.y = opt->plr->dir.y / length;
 		ft_plane(opt->plr);
+		opt->plr->angle += -ROT_SPEED;
 	}
 	if (opt->keys == 6)
 	{
@@ -120,6 +121,7 @@ void	move_player(t_opt *opt)
 		opt->plr->dir.x = opt->plr->dir.x / length;
 		opt->plr->dir.y = opt->plr->dir.y / length;
 		ft_plane(opt->plr);
+		opt->plr->angle += ROT_SPEED;
 	}
 	opt->old_keys = opt->keys;
 	opt->keys = -1;
