@@ -26,10 +26,10 @@
 # define PIC_SIZE		30
 # define SPRITE_SIZE	64
 # define DELTA			0
-# define RES_X			1920
-# define RES_Y			1080
+# define RES_X			1280
+# define RES_Y			720
 # define REYS			100
-# define ANGLE			1.484
+# define ANGLE			1.4835
 # define FOV			85.0
 # define DELIM			10
 # define ROT_SPEED		0.07
@@ -155,7 +155,7 @@ void	ft_printf_all_info(t_opt *opt);
 
 /* 1/5 utils.c */
 void	puterror(char *errorline);
-double	ft_angle(double alpha);
+double	ft_angle(t_player *plr);
 int		ft_atoi_m(const char *str);
 
 /* 5/5 print_map.c */

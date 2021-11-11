@@ -63,6 +63,7 @@ int	key_press(int key, t_opt *opt)
 		double	length = hypot(opt->plr->dir.x, opt->plr->dir.y);
 		opt->plr->dir.x = opt->plr->dir.x / length;
 		opt->plr->dir.y = opt->plr->dir.y / length;
+		opt->plr->angle += -ROT_SPEED;
 	}
 	if (key == RR_KEY)
 	{
@@ -71,6 +72,7 @@ int	key_press(int key, t_opt *opt)
 		double	length = hypot(opt->plr->dir.x, opt->plr->dir.y);
 		opt->plr->dir.x = opt->plr->dir.x / length;
 		opt->plr->dir.y = opt->plr->dir.y / length;
+		opt->plr->angle += ROT_SPEED;
 	}
 	ft_plane(opt->plr);
 	if (key == ESC_KEY)

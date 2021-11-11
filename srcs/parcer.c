@@ -256,6 +256,14 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_check_field(opt->map->canvas, opt->map);
 	ft_init_images(opt);
 	ft_init_sprites(opt, opt->map);
-	ft_printf_all_info(opt);
+	opt->map->canvas[(int)opt->plr->pos.y][(int)opt->plr->pos.x] = '0';
+	opt->plr->angle = 0;
+	if (opt->map->viewpos == 'E')
+		opt->plr->angle = M_PI;
+	if (opt->map->viewpos == 'S')
+		opt->plr->angle = M_PI / 2;
+	if (opt->map->viewpos == 'N')
+		opt->plr->angle = 3 * M_PI / 2;
+	// ft_printf_all_info(opt);
 	ft_plane(opt->plr);
 }
