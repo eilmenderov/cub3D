@@ -30,6 +30,7 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->map->flag = 0;
 	opt->map->width = 0;
 	opt->keys = -1;
+	opt->old_keys = -1;
 }
 
 void	ft_init_images(t_opt *opt)

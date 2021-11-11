@@ -134,6 +134,7 @@ typedef struct s_opt
 	void		*mlx;
 	void		*win;
 	int			keys;
+	int			old_keys;
 
 	t_img		textures[5];
 	t_img		*mand;
