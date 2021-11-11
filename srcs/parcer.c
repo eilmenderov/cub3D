@@ -221,23 +221,27 @@ void	ft_check_field(char **field, t_map *map)
 	}
 }
 
-void	ft_load_xmp(void *mlx, void **img, char *file)
+void	ft_load_xmp(void *mlx, void **img, char *file, t_img *pic)
 {
 	int	fl[2];
 
+	pic = malloc(sizeof(t_img));
+	// printf("%s\n", file);
 	*img = mlx_xpm_file_to_image(mlx, file, &fl[0], &fl[1]);
 	if (!*img)
-		puterror(ft_strjoin("can not read xmp file ", file));
+		puterror(ft_strjoin("can not read xpm file ", file));
 	if (fl[0] != SPRITE_SIZE || fl[0] != fl[1])
-		puterror(ft_strjoin("incorrect xmp size ", file));
+		puterror(ft_strjoin("incorrect xpm size ", file));
+	pic->addr = mlx_get_data_addr(*img, &pic->b_p_p,
+			&pic->line_length, &pic->endian);
 }
 
 void	ft_init_sprites(t_opt *opt, t_map *map)
 {
-	ft_load_xmp(opt->mlx, &opt->pic->wall_e, map->path_e);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_s, map->path_s);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_n, map->path_n);
-	ft_load_xmp(opt->mlx, &opt->pic->wall_w, map->path_w);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_e, map->path_e, &opt->tex_e);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_s, map->path_s, &opt->tex_s);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_n, map->path_n, &opt->tex_n);
+	ft_load_xmp(opt->mlx, &opt->pic->wall_w, map->path_w, &opt->tex_w);
 }
 
 void	ft_parcer(t_opt *opt, char *file)

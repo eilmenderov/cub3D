@@ -128,10 +128,9 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, char tex)
 		color = MENU_BACKGROUND;
 	else if (tex == 'W')
 		color = COLOR_DEEP;
-	// (void)opt;
-	// (void)x;
-	// (void)tex;
-	// printf("%f\n", trash.y);
+	(void)opt;
+	(void)x;
+	(void)tex;
 	while (start < finish)
 	{
 		p_y = (int)pos & (SPRITE_SIZE - 1);

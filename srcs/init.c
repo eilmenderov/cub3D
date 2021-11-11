@@ -45,6 +45,10 @@ void	ft_init_images(t_opt *opt)
 			&opt->mand->line_length, &opt->mand->endian);
 	if (!opt->mand->addr)
 		puterror("can't create image addr");
+	opt->pic->wall_e = NULL;
+	opt->pic->wall_s = NULL;
+	opt->pic->wall_w = NULL;
+	opt->pic->wall_n = NULL;
 }
 
 void	ft_init_structs(t_opt *opt)

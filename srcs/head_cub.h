@@ -68,6 +68,15 @@ typedef struct s_vector
 	double	y;
 }				t_vector;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		b_p_p;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_pic
 {
 	void			*wall_n;
@@ -95,16 +104,6 @@ typedef struct s_map
 	struct s_opt	*opt;
 }				t_map;
 
-typedef struct s_img
-{
-	void	*ptr;
-	void	*img;
-	char	*addr;
-	int		b_p_p;
-	int		line_length;
-	int		endian;
-}				t_img;
-
 typedef struct s_player
 {
 	t_vector	plane;
@@ -131,16 +130,20 @@ typedef struct s_dist
 
 typedef struct s_opt
 {
-	void		*mlx;
-	void		*win;
-	int			keys;
-	int			old_keys;
+	void			*mlx;
+	void			*win;
+	int				keys;
+	int				old_keys;
 
-	t_img		textures[5];
-	t_img		*mand;
-	t_map		*map;
-	t_player	*plr;
-	t_pic		*pic;
+
+	t_img			tex_n;
+	t_img			tex_s;
+	t_img			tex_w;
+	t_img			tex_e;
+	t_img			*mand;
+	t_map			*map;
+	t_player		*plr;
+	t_pic			*pic;
 }				t_opt;
 
 /* 6/5 main.c */
