@@ -25,7 +25,7 @@ void	ft_pool_sprite_path(char **adress, char *line, t_map *map)
 	i = ft_skip_fw(line, ' ');
 	len = ft_strlen_m(&line[i], 0);
 	if (len < 4 || ft_strncmp(&line[i] + len - 4, ".xpm", 5))
-		puterror("incorrect sprite name, need <sprite_path.x>");
+		puterror("incorrect sprite name, need <sprite_path.xpm>");
 	*adress = ft_strdup(&line[i]);
 }
 
@@ -192,12 +192,6 @@ void	ft_check_map(t_opt *opt, int fd, int gnl)
 	ft_pool_field(lst, opt->map->heigh, opt->map);
 	ft_free_all_lst(lst);
 	close (fd);
-}
-
-void	ft_plane(t_player *player)
-{
-	player->plane.x = -player->dir.y * player->opt->cnst->tan_plane;
-	player->plane.y = player->dir.x * player->opt->cnst->tan_plane;
 }
 
 void	ft_check_field(char **field, t_map *map)

@@ -19,16 +19,18 @@ void	puterror(char *errorline)
 	exit(1);
 }
 
+void	ft_plane(t_player *player)
+{
+	player->plane.x = -player->dir.y * player->opt->cnst->tan_plane;
+	player->plane.y = player->dir.x * player->opt->cnst->tan_plane;
+}
+
 double	ft_angle(t_player *plr)
 {
-
-	// alpha = atan(plr->plane.y / plr->plane.x);
-	// alpha = plr->angle;
-	// printf("angle: %f p_x: %f p_y: %f\n", alpha, plr->plane.x, plr->plane.y);
 	if (plr->angle <= 0)
-		plr->angle += M_PI * 2;
-	if (plr->angle > M_PI * 2)
-		plr->angle -= M_PI * 2;
+		plr->angle += M_PI;
+	if (plr->angle > M_2PI)
+		plr->angle -= M_2PI;
 	return (plr->angle);
 }
 
