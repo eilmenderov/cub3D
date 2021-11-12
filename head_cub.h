@@ -13,8 +13,8 @@
 #ifndef HEAD_CUB_H
 # define HEAD_CUB_H
 
-# include "../libft/libft.h"
-# include "../minilibx_opengl/mlx.h"
+# include "./libft/libft.h"
+# include "./minilibx_opengl/mlx.h"
 
 # include <math.h>
 # include <fcntl.h>
@@ -22,13 +22,14 @@
 # include <stdio.h>
 
 /* pic */
-# define SPRITE_SIZE	64
 # define RES_X			1280
 # define RES_Y			720
 # define REYS			50
 # define FOV			85.0
 # define ROT_SPEED		0.08
 # define MOVE_SPEED		0.10
+
+# define SPRITE_SIZE	64
 
 /* minimap */
 # define MAP_SIZE		10
@@ -154,37 +155,44 @@ typedef struct s_opt
 	t_pic			*pic;
 }				t_opt;
 
-/* 6/5 main.c */
-void	print_mandatori(t_opt *opt);
-void	puterror(char *errorline);
-
-/* 3/5 parcer.c */
-void	ft_parcer(t_opt *opt, char *file);
-void	ft_plane(t_player *player);
-
-/* 1/5 dev_utils.c */
-void	ft_printf_all_info(t_opt *opt);
-
-/* 1/5 utils.c */
-void	puterror(char *errorline);
-double	ft_angle(t_player *plr);
-int		ft_atoi_m(const char *str);
-
-/* 5/5 print_map.c */
-void	print_minimap(t_opt *opt);
-void	sizepixel(t_opt *opt, int x, int y, int color);
-void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
-void	sizepixel_player(t_opt *opt, int x, int y, int color);
-
-/* 3/5 init.c */
-void	ft_init_images(t_opt *opt);
+/* 5/5 init.c */
 void	ft_init_structs(t_opt *opt);
+void	ft_init_images(t_opt *opt);
+void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr);
 void	ft_calculate_consts(t_opt *opt);
 
-/* 3/5 loudev.c */
+/* 2/5 keys.c */
+int		key_press(int key, t_opt *opt);
+int		key_release(int key, t_opt *opt);
+
+/* 5/5 loudev.c */
 void	ft_draw_walls(t_opt *opt);
 
-/* 3/5	move.c */
+/* 5/5 main.c */
+int		closer(t_opt *opt);
+void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
+
+/* 4/5	move.c */
 void	move_player(t_opt *opt);
+
+/* 5/5 parcer_check_map.c */
+void	ft_check_map(t_opt *opt, int fd, int gnl);
+
+/* 3/5 parcer_pool_field.c */
+void	direction_init(t_vector *dir, char c, t_opt *opt);
+void	ft_read_map(t_map *map, char *line, t_list **lst);
+void	ft_pool_field(t_list *lst, int lst_size, t_map *map);
+
+/* 5/5 parcer.c */
+void	ft_parcer(t_opt *opt, char *file);
+
+/* 5/5 print_map_bonus.c */
+void	print_minimap(t_opt *opt);
+
+/* 4/5 utils.c */
+void	puterror(char *errorline);
+void	ft_plane(t_player *player);
+double	ft_angle(t_player *plr);
+int		ft_atoi_m(const char *str);
 
 #endif

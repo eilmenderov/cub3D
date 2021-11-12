@@ -67,6 +67,7 @@ int	draw_all(t_opt *opt)
 	move_player(opt);
 	print_mandatori(opt);
 	ft_draw_walls(opt);
+	print_minimap(opt);
 	mlx_put_image_to_window(opt->mlx, opt->win, opt->mand->img, 0, 0);
 	return (0);
 }

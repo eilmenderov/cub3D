@@ -1,6 +1,8 @@
-SRCS		= main.c parcer.c utils.c print_map.c init.c loudev.c move.c
+SRCS		= main.c parcer.c utils.c init.c loudev.c move.c keys.c \
+			  parcer_check_map.c parcer_pool_field.c
 
-BONUS		= main.c
+BONUS		= main_bonus.c parcer.c utils.c print_map_bonus.c init.c \
+			  loudev.c move.c keys.c parcer_check_map.c parcer_pool_field.c
 
 SRCS_DIR	= ./srcs/
 
@@ -12,9 +14,7 @@ NAME		= cub3D
 
 B_NAME		= cub3D_bonus
 
-HEADER		= ./srcs/head_cub.h
-
-B_HEADER	= ./srcs/head_cub_bonus.h
+HEADER		= ./head_cub.h
 
 MLX_LIBS	= -lmlx -lm -L ./minilibx_opengl -framework OpenGL -framework AppKit
 
@@ -61,6 +61,7 @@ bonus:		${BONUS_OBJS} ${HEADER}
 			${MAKE} -C ./minilibx_opengl 2> /dev/null
 			${CC} ${CFLAGS} -o ${B_NAME} -I ${HEADER} ${BONUS_OBJS} ${LIB} ${MLX_LIBS}
 			@echo "${NEW}${B_NAME} compile!${SHALLOW}"
+
 norm:
 			@echo "${GREEN}|-----Chek NORMs!-----|${NEW}"
 			@norminette ./srcs/

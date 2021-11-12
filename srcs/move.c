@@ -1,6 +1,6 @@
-#include "head_cub.h"
+#include "../head_cub.h"
 
-int	ft_check_p(t_map *map, t_opt *opt, double x, double y)
+static int	ft_check_p(t_map *map, t_opt *opt, double x, double y)
 {
 	x = opt->plr->pos.x + x;
 	y = opt->plr->pos.y + y;
@@ -9,7 +9,7 @@ int	ft_check_p(t_map *map, t_opt *opt, double x, double y)
 	return (1);
 }
 
-void	rotate_player(t_opt *opt, double rot_speed)
+static void	rotate_player(t_opt *opt, double rot_speed)
 {
 	double	sin_al;
 	double	cos_al;
@@ -26,7 +26,7 @@ void	rotate_player(t_opt *opt, double rot_speed)
 	opt->plr->angle += rot_speed;
 }
 
-void	move(t_opt *opt, double step_x, double step_y)
+static void	move(t_opt *opt, double step_x, double step_y)
 {
 	if (!ft_check_p(opt->map, opt, step_x, 0))
 		opt->plr->pos.x += step_x;

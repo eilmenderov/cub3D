@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "head_cub.h"
+#include "../head_cub.h"
 
 static void	ft_init_opt_map(t_opt *opt)
 {
@@ -38,24 +38,6 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->keys->arrow_r = -1;
 }
 
-void	ft_init_images(t_opt *opt)
-{
-	opt->mand = malloc(sizeof(t_img));
-	if (!opt->mand)
-		puterror("can't allocate memory(img)");
-	opt->mand->img = mlx_new_image(opt->mlx, RES_X, RES_Y);
-	if (!opt->mand->img)
-		puterror("can't create new image");
-	opt->mand->addr = mlx_get_data_addr(opt->mand->img, &opt->mand->b_p_p,
-			&opt->mand->line_length, &opt->mand->endian);
-	if (!opt->mand->addr)
-		puterror("can't create image addr");
-	opt->pic->wall_e = NULL;
-	opt->pic->wall_s = NULL;
-	opt->pic->wall_w = NULL;
-	opt->pic->wall_n = NULL;
-}
-
 void	ft_init_structs(t_opt *opt)
 {
 	opt->map = malloc(sizeof(t_map));
@@ -80,6 +62,52 @@ void	ft_init_structs(t_opt *opt)
 	if (!opt->cnst)
 		puterror("can't allocate memory(constants)");
 	ft_init_opt_map(opt);
+}
+
+void	ft_init_images(t_opt *opt)
+{
+	opt->mand = malloc(sizeof(t_img));
+	if (!opt->mand)
+		puterror("can't allocate memory(img)");
+	opt->mand->img = mlx_new_image(opt->mlx, RES_X, RES_Y);
+	if (!opt->mand->img)
+		puterror("can't create new image");
+	opt->mand->addr = mlx_get_data_addr(opt->mand->img, &opt->mand->b_p_p,
+			&opt->mand->line_length, &opt->mand->endian);
+	if (!opt->mand->addr)
+		puterror("can't create image addr");
+	opt->pic->wall_e = NULL;
+	opt->pic->wall_s = NULL;
+	opt->pic->wall_w = NULL;
+	opt->pic->wall_n = NULL;
+}
+
+void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr)
+{
+	dist->deltadistx = fabs(1 / ray.x);
+	dist->deltadisty = fabs(1 / ray.y);
+	dist->x = (int)plr->pos.x;
+	dist->y = (int)plr->pos.y;
+	if (ray.x > 0)
+	{
+		dist->stepx = 1;
+		dist->sidedistx = (ceil(plr->pos.x) - plr->pos.x) * dist->deltadistx;
+	}
+	else
+	{
+		dist->stepx = -1;
+		dist->sidedistx = (plr->pos.x - floor(plr->pos.x)) * dist->deltadistx;
+	}
+	if (ray.y > 0)
+	{
+		dist->stepy = 1;
+		dist->sidedisty = (ceil(plr->pos.y) - plr->pos.y) * dist->deltadisty;
+	}
+	else
+	{
+		dist->stepy = -1;
+		dist->sidedisty = (plr->pos.y - floor(plr->pos.y)) * dist->deltadisty;
+	}
 }
 
 void	ft_calculate_consts(t_opt *opt)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "head_cub.h"
+#include "../head_cub.h"
 
 void	puterror(char *errorline)
 {

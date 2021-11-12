@@ -1,34 +1,7 @@
-#include "head_cub.h"
+#include "../head_cub.h"
 
-void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr)
-{
-	dist->deltadistx = fabs(1 / ray.x);
-	dist->deltadisty = fabs(1 / ray.y);
-	dist->x = (int)plr->pos.x;
-	dist->y = (int)plr->pos.y;
-	if (ray.x > 0)
-	{
-		dist->stepx = 1;
-		dist->sidedistx = (ceil(plr->pos.x) - plr->pos.x) * dist->deltadistx;
-	}
-	else
-	{
-		dist->stepx = -1;
-		dist->sidedistx = (plr->pos.x - floor(plr->pos.x)) * dist->deltadistx;
-	}
-	if (ray.y > 0)
-	{
-		dist->stepy = 1;
-		dist->sidedisty = (ceil(plr->pos.y) - plr->pos.y) * dist->deltadisty;
-	}
-	else
-	{
-		dist->stepy = -1;
-		dist->sidedisty = (plr->pos.y - floor(plr->pos.y)) * dist->deltadisty;
-	}
-}
-
-double	ft_find_dist(t_vector ray, t_player *plr, char **map, char *side)
+static double	ft_find_dist(t_vector ray, t_player *plr,
+		char **map, char *side)
 {
 	t_dist	dist;
 	int		fl;
@@ -57,7 +30,8 @@ double	ft_find_dist(t_vector ray, t_player *plr, char **map, char *side)
 	return ((dist.y - plr->pos.y + (1 - dist.stepy) * 0.5) / ray.y);
 }
 
-t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
+static t_vector	get_tex_data(t_vector ray, t_player *plr,
+		t_opt *opt, t_img **tex)
 {
 	t_vector	trash;
 	double		dist;
@@ -85,13 +59,13 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 	return (trash);
 }
 
-unsigned int	*ft_get_color(t_img *img, int x, int y)
+static unsigned int	*ft_get_color(t_img *img, int x, int y)
 {
 	return ((unsigned *)(img->addr + y * img->line_length
 		+ x * img->b_p_p));
 }
 
-void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)
+static void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)
 {
 	int			p_x;
 	int			p_y;

@@ -1,15 +1,6 @@
-#include "head_cub.h"
+#include "../head_cub.h"
 
-void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = opt->mand->addr + (y * opt->mand->line_length + x
-			* opt->cnst->b_p_p_del);
-	*(unsigned int *)dst = color;
-}
-
-void	ft_cast_rays(t_opt *opt, double x, double y)
+static void	ft_cast_rays(t_opt *opt, double x, double y)
 {
 	double	x_s;
 	double	y_s;
@@ -35,7 +26,7 @@ void	ft_cast_rays(t_opt *opt, double x, double y)
 	}
 }
 
-void	sizepixel_player(t_opt *opt, int x, int y, int color)
+static void	sizepixel_player(t_opt *opt, int x, int y, int color)
 {
 	int		x_size;
 	int		y_size;
@@ -58,7 +49,7 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 	}
 }
 
-void	sizepixel(t_opt *opt, int x, int y, int color)
+static void	sizepixel(t_opt *opt, int x, int y, int color)
 {
 	int	x_size;
 	int	y_size;
