@@ -12,22 +12,42 @@
 
 #include "head_cub.h"
 
+int	closer(t_opt *opt)
+{
+	ft_free_split(opt->map->canvas);
+	free(opt->map->path_n);
+	free(opt->map->path_s);
+	free(opt->map->path_w);
+	free(opt->map->path_e);
+	free(opt->map);
+	free(opt->plr);
+	free(opt->cnst);
+	free(opt->mand);
+	free(opt->pic->wall_n);
+	free(opt->pic->wall_s);
+	free(opt->pic->wall_w);
+	free(opt->pic->wall_e);
+	free(opt->pic);
+	mlx_destroy_window(opt->mlx, opt->win);
+	exit(0);
+}
+
 int	key_press(int key, t_opt *opt)
 {
 	if (key == W_KEY)
 		opt->keys->w = 1;
 	else if (key == S_KEY)
 		opt->keys->s = 1;
-	else if (key == D_KEY)
+	else if (key == E_KEY)
 		opt->keys->d = 1;
-	else if (key == A_KEY)
+	else if (key == Q_KEY)
 		opt->keys->a = 1;
-	else if (key == RL_KEY)
+	else if (key == RL_KEY || key == A_KEY)
 		opt->keys->arrow_l = 1;
-	else if (key == RR_KEY)
+	else if (key == RR_KEY || key == D_KEY)
 		opt->keys->arrow_r = 1;
 	if (key == ESC_KEY)
-		exit(0);
+		closer(opt);
 	return (key);
 }
 
@@ -37,21 +57,15 @@ int	key_release(int key, t_opt *opt)
 		opt->keys->w = -1;
 	else if (key == S_KEY)
 		opt->keys->s = -1;
-	else if (key == D_KEY)
+	else if (key == E_KEY)
 		opt->keys->d = -1;
-	else if (key == A_KEY)
+	else if (key == Q_KEY)
 		opt->keys->a = -1;
-	else if (key == RL_KEY)
+	else if (key == RL_KEY || key == A_KEY)
 		opt->keys->arrow_l = -1;
-	else if (key == RR_KEY)
+	else if (key == RR_KEY || key == D_KEY)
 		opt->keys->arrow_r = -1;
 	return (key);
-}
-
-/* Добавить free */
-int	closer(void)
-{
-	exit(0);
 }
 
 void	print_mandatori(t_opt *opt)

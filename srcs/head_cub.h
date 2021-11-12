@@ -23,12 +23,12 @@
 
 /* pic */
 # define SPRITE_SIZE	64
-# define RES_X			1920
-# define RES_Y			1080
+# define RES_X			1280
+# define RES_Y			720
 # define REYS			50
 # define FOV			85.0
 # define ROT_SPEED		0.08
-# define MOVE_SPEED		0.15
+# define MOVE_SPEED		0.10
 
 /* minimap */
 # define MAP_SIZE		10
@@ -39,6 +39,8 @@
 /* keys */
 # define W_KEY			13
 # define A_KEY			0
+# define Q_KEY			12
+# define E_KEY			14
 # define S_KEY			1
 # define D_KEY			2
 # define RL_KEY			123
