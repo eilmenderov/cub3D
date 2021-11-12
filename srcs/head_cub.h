@@ -128,6 +128,7 @@ typedef struct s_cnst
 	double	half_diff;
 	double	angle;
 	int		b_p_p_del;
+	int		half_resY;
 }				t_cnst;
 
 typedef struct s_keys

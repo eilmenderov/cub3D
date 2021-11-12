@@ -94,4 +94,5 @@ void	ft_calculate_consts(t_opt *opt)
 	opt->cnst->map_step = opt->cnst->angle / REYS;
 	opt->cnst->map_diff = (double)MAP_SIZE * 0.25;
 	opt->cnst->b_p_p_del = opt->mand->b_p_p / 8;
+	opt->cnst->half_resY = RES_Y / 2;
 }

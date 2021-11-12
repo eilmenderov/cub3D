@@ -54,15 +54,6 @@ int	closer(void)
 	exit(0);
 }
 
-void	mand_pixel_put(t_opt *opt, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = opt->mand->addr + (y * opt->mand->line_length + x
-			* (opt->mand->b_p_p / 8));
-	*(unsigned int *)dst = color;
-}
-
 void	print_mandatori(t_opt *opt)
 {
 	int	x;
@@ -74,10 +65,10 @@ void	print_mandatori(t_opt *opt)
 		x = 0;
 		while (x < RES_X)
 		{
-			if (y > RES_Y * 0.5)
-				mand_pixel_put(opt, x, y, opt->map->floor);
+			if (y > opt->cnst->half_resY)
+				my_mlx_pixel_put(opt, x, y, opt->map->floor);
 			else
-				mand_pixel_put(opt, x, y, opt->map->sky);
+				my_mlx_pixel_put(opt, x, y, opt->map->sky);
 			x++;
 		}
 		y++;
