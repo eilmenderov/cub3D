@@ -52,9 +52,9 @@ double	ft_find_dist(t_vector ray, t_player *plr, char **map,char *side)
 	if (fl)
 		*side = 'H';
 	if (fl)
-		return ((dist.x - plr->pos.x + (1 - dist.stepX) / 2) / ray.x);
+		return ((dist.x - plr->pos.x + (1 - dist.stepX) * 0.5) / ray.x);
 	*side = 'V';
-	return ((dist.y - plr->pos.y + (1 - dist.stepY) / 2) / ray.y);
+	return ((dist.y - plr->pos.y + (1 - dist.stepY) * 0.5) / ray.y);
 }
 
 t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
@@ -88,7 +88,7 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 unsigned int *ft_get_pix(t_img *img, int x, int y)
 {
 	return ((unsigned *)(img->addr + y * img->line_length
-		+ x * (img->b_p_p / 8)));
+		+ x * img->b_p_p));
 }
 
 void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)

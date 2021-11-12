@@ -231,6 +231,7 @@ void	ft_load_xmp(t_opt *opt, t_img *texture, char *file)
 		puterror(ft_strjoin("incorrect xpm size ", file));
 	texture->addr = mlx_get_data_addr(texture->img, &texture->b_p_p,
 			&texture->line_length, &texture->endian);
+	texture->b_p_p = texture->b_p_p / 8;
 }
 
 void	ft_init_sprites(t_opt *opt, t_map *map)
