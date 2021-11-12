@@ -103,10 +103,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		puterror("incorrect arguments, need only one");
 	ft_parcer(&opt, argv[1]);
-	// opt.x_widht = -1;
-	// opt.plr->pos_y = -1;
 	print_minimap(&opt);
-	// printf("x: %f	y: %f\n",  opt.x_widht, opt.plr->pos_y), exit(0);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
 	mlx_hook(opt.win, 2, 0, key_press, &opt);
 	// mlx_hook(opt.win, 3, 0, key_release, &opt.keys);

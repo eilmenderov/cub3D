@@ -116,23 +116,29 @@ void	ft_pool_field(t_list *lst, int lst_size, t_map *map)
 	map->canvas[i] = NULL;
 }
 
-void	direction_init(t_vector *dir, char c)
+void	direction_init(t_vector *dir, char c, t_opt *opt)
 {
 	if (c == 'N' || c == 'S')
 	{
+		opt->plr->angle = 3 * M_PI / 2;
 		if (c == 'S')
 			dir->y = 1;
 		else
 			dir->y = -1;
+		if (c == 'S')
+			opt->plr->angle = M_PI / 2;
 	}
 	else
 		dir->y = 0;
 	if (c == 'E' || c == 'W')
 	{
+		opt->plr->angle = M_PI;
 		if (c == 'E')
 			dir->x = 1;
 		else
 			dir->x = -1;
+		if (c == 'E')
+			opt->plr->angle = 0;
 	}
 	else
 		dir->x = 0;
@@ -157,7 +163,7 @@ void	ft_check_str(t_opt *opt, char *line)
 		{
 			opt->map->viewpos = line[i];
 			opt->plr->pos.x = i;
-			direction_init(&opt->plr->dir, line[i]);
+			direction_init(&opt->plr->dir, line[i], opt);
 		}
 	}
 }
@@ -190,11 +196,8 @@ void	ft_check_map(t_opt *opt, int fd, int gnl)
 
 void	ft_plane(t_player *player)
 {
-	double	tmp;
-
-	tmp = tan(FOV * M_PI / 360);
-	player->plane.x = -player->dir.y * tmp;
-	player->plane.y = player->dir.x * tmp;
+	player->plane.x = -player->dir.y * player->opt->cnst->tan_plane;
+	player->plane.y = player->dir.x * player->opt->cnst->tan_plane;
 }
 
 void	ft_check_field(char **field, t_map *map)
@@ -265,13 +268,6 @@ void	ft_parcer(t_opt *opt, char *file)
 	ft_init_images(opt);
 	ft_init_sprites(opt, opt->map);
 	opt->map->canvas[(int)opt->plr->pos.y][(int)opt->plr->pos.x] = '0';
-	opt->plr->angle = 0;
-	if (opt->map->viewpos == 'W')
-		opt->plr->angle = M_PI;
-	if (opt->map->viewpos == 'S')
-		opt->plr->angle = M_PI / 2;
-	if (opt->map->viewpos == 'N')
-		opt->plr->angle = 3 * M_PI / 2;
-	// ft_printf_all_info(opt);
+	ft_calculate_consts(opt);
 	ft_plane(opt->plr);
 }

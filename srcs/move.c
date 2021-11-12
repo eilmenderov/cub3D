@@ -11,9 +11,15 @@ int	ft_check_p(t_map *map, t_opt *opt, double x, double y)
 
 void	rotate_player(t_opt *opt, double rot_speed)
 {
-	opt->plr->dir.x = opt->plr->dir.x * cos(rot_speed) - opt->plr->dir.y * sin(rot_speed);
-	opt->plr->dir.y = opt->plr->dir.x * sin(rot_speed) + opt->plr->dir.y * cos(rot_speed);
-	double	length = hypot(opt->plr->dir.x, opt->plr->dir.y);
+	double	sin_al;
+	double	cos_al;
+	double	length;
+
+	sin_al = sin(rot_speed);
+	cos_al = opt->cnst->cos_rot;
+	opt->plr->dir.x = opt->plr->dir.x * cos_al - opt->plr->dir.y * sin_al;
+	opt->plr->dir.y = opt->plr->dir.x * sin_al + opt->plr->dir.y * cos_al;
+	length = hypot(opt->plr->dir.x, opt->plr->dir.y);
 	opt->plr->dir.x = opt->plr->dir.x / length;
 	opt->plr->dir.y = opt->plr->dir.y / length;
 	ft_plane(opt->plr);

@@ -19,6 +19,7 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->plr->pos.x = PIC_SIZE;
 	opt->plr->pos.y = PIC_SIZE;
 	opt->plr->angle = 0;
+	opt->plr->opt = opt;
 	opt->map->canvas = NULL;
 	opt->map->path_n = NULL;
 	opt->map->path_s = NULL;
@@ -32,7 +33,6 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->keys = -1;
 	opt->old_keys = -1;
 }
-
 
 void	ft_init_images(t_opt *opt)
 {
@@ -69,5 +69,20 @@ void	ft_init_structs(t_opt *opt)
 	opt->plr = malloc(sizeof(t_player));
 	if (!opt->plr)
 		puterror("can't allocate memory(plr)");
+	opt->cnst = malloc(sizeof(t_cnst));
+	if (!opt->cnst)
+		puterror("can't allocate memory(constants)");
 	ft_init_opt_map(opt);
+}
+
+void	ft_calculate_consts(t_opt *opt)
+{
+	opt->cnst->tan_plane = tan(FOV * M_PI / 360);
+	opt->cnst->camX_const = 2.0 / (double)RES_X;
+	opt->cnst->cos_rot = cos(ROT_SPEED);
+	opt->cnst->angle = ((double)FOV / 180.0) * M_PI;
+	opt->cnst->half_angle = opt->cnst->angle * 0.5;
+	opt->cnst->map_step = opt->cnst->angle / REYS;
+	opt->cnst->map_diff = (double)MAP_SIZE * 0.25;
+	opt->cnst->b_p_p_del = opt->mand->b_p_p / 8;
 }

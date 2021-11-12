@@ -94,14 +94,15 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	t_vector	plane;
-	t_vector	pos;
-	t_vector	dir;
-	double		angle;
-	int			move;
-	int			strafe;
-	int			rotate;
-	int			run;
+	t_vector		plane;
+	t_vector		pos;
+	t_vector		dir;
+	double			angle;
+	int				move;
+	int				strafe;
+	int				rotate;
+	int				run;
+	struct s_opt	*opt;
 }				t_player;
 
 typedef struct s_dist
@@ -116,6 +117,19 @@ typedef struct s_dist
 	int		y;
 }				t_dist;
 
+typedef struct s_cnst
+{
+	double	tan_plane;
+	double	camX_const;
+	double	cos_rot;
+	double	half_angle;
+	double	map_step;
+	double	map_diff;
+	double	half_diff;
+	double	angle;
+	int		b_p_p_del;
+}				t_cnst;
+
 typedef struct s_opt
 {
 	void			*mlx;
@@ -123,12 +137,14 @@ typedef struct s_opt
 	int				keys;
 	int				old_keys;
 
-
+	t_cnst			*cnst;
 	t_img			*mand;
 	t_map			*map;
 	t_player		*plr;
 	t_pic			*pic;
 }				t_opt;
+
+
 
 /* 6/5 main.c */
 void	print_mandatori(t_opt *opt);
@@ -155,6 +171,7 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color);
 /* 3/5 init.c */
 void	ft_init_images(t_opt *opt);
 void	ft_init_structs(t_opt *opt);
+void	ft_calculate_consts(t_opt *opt);
 
 /* 3/5 loudev.c */
 void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);

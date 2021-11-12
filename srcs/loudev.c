@@ -1,14 +1,5 @@
 #include "head_cub.h"
 
-void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color)
-{
-	while (drawStart < drawEnd)
-	{
-		my_mlx_pixel_put(opt, x, drawStart, color);
-		drawStart++;
-	}
-}
-
 void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr)
 {
 	dist->deltaDistX = fabs(1 / ray.x);
@@ -73,7 +64,6 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 	char		side;
 
 	dist = ft_find_dist(ray, plr, opt->map->canvas, &side);
-	// printf("dist: %f\n", dist);
 	if (side == 'V')
 	{
 		trash.x = plr->pos.x + dist * ray.x;
@@ -92,13 +82,11 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 	}
 	trash.x -= floor(trash.x);
 	trash.y = dist;
-	// printf("v_x: %f	v_y: %f\n", trash.x, trash.y);
 	return (trash);
 }
 
 unsigned int *ft_get_pix(t_img *img, int x, int y)
 {
-	// printf("%d\t%d\n", x, y);
 	return ((unsigned *)(img->addr + y * img->line_length
 		+ x * (img->b_p_p / 8)));
 }
@@ -137,20 +125,14 @@ void	ft_draw_walls(t_opt *opt)
 	t_vector	trash;
 
 	x = 0;
-	// printf("pls_x: %f plr_y: %f\n", opt->plr->pos_x, opt->plr->pos_y), exit (0);
 	while (x < RES_X)
 	{
-		cameraX = 2 * (double)x / (double)RES_X - 1;
+		cameraX = (double)x * opt->cnst->camX_const - 1;
 		ray.x = opt->plr->dir.x + opt->plr->plane.x * cameraX;
 		ray.y = opt->plr->dir.y + opt->plr->plane.y * cameraX;
 		trash = get_tex_data(ray, opt->plr, opt, &tex);
-		// printf("tes: %p\n", tex);
-		// printf("bef - x: %f	y: %f\n", trash.x, trash.y);
 		trash.y = (double)RES_Y / trash.y;
-		// printf("aft - x: %f	y: %f\n", trash.x, trash.y);
 		put_tex_stripe(opt, x, trash, tex);
-		// if (x > 5)
-		// 	exit(0);
 		x++;
 	}
 }

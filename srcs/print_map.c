@@ -5,27 +5,8 @@ void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color)
 	char	*dst;
 
 	dst = opt->mand->addr + (y * opt->mand->line_length + x
-			* (opt->mand->b_p_p / 8));
+			* opt->cnst->b_p_p_del);
 	*(unsigned int *)dst = color;
-}
-
-void	ft_cast_one_ray(t_opt *opt, int diff)
-{
-	float	x;
-	float	y;
-	float	l;
-	float	full_angle;
-
-	full_angle = opt->plr->angle * 0.5;
-	x = opt->plr->pos.x - diff / 2;
-	y = opt->plr->pos.y - diff / 2;
-	while (opt->map->canvas[(int)(y / PIC_SIZE)][(int)(x / PIC_SIZE)] != '1')
-	{
-		x += cos(full_angle);
-		y += sin(full_angle);
-		my_mlx_pixel_put(opt, (int)x, (int)y, 0x990099);
-	}
-	l = sqrt(pow(opt->plr->pos.x - x, 2) + pow(opt->plr->pos.y - y, 2));
 }
 
 void	ft_cast_rays(t_opt *opt, double x, double y)
@@ -36,21 +17,17 @@ void	ft_cast_rays(t_opt *opt, double x, double y)
 	double	end;
 	double	step;
 
-	// printf("B_angle: %f\n", opt->plr->angle);
-	// opt->plr->angle = ;
-	// printf("A_angle: %f\n", opt->plr->angle);
 	start = ft_angle(opt->plr);
-	end = start + ANGLE;
-	step = ANGLE / REYS;
-	// printf("start: %f end: %f step: %f dir_x: %f dir_y: %f\n", start, end, step, opt->plr->dir.x, opt->plr->dir.y);
+	end = start + opt->cnst->angle;
+	step = opt->cnst->map_step;
 	while (start < end)
 	{
 		x_s = x;
 		y_s = y;
 		while (opt->map->canvas[(int)(y_s / MAP_SIZE)][(int)(x_s / MAP_SIZE)] != '1')
 		{
-			x_s += cos(start - ANGLE * 0.5);
-			y_s += sin(start - ANGLE * 0.5);
+			x_s += cos(start - opt->cnst->half_angle);
+			y_s += sin(start - opt->cnst->half_angle);
 			my_mlx_pixel_put(opt, (int)x_s, (int)y_s, 0x990099);
 		}
 		start += step;
@@ -63,8 +40,7 @@ void	sizepixel_player(t_opt *opt, int x, int y, int color)
 	int		y_size;
 	double	diff;
 
-	diff = MAP_SIZE * 0.25;
-	// ft_cast_one_ray(opt, diff);
+	diff = opt->cnst->map_diff;
 	ft_cast_rays(opt, x, y);
 	y = y + diff;
 	x = x + diff;
