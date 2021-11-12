@@ -16,8 +16,8 @@ static void	ft_init_opt_map(t_opt *opt)
 {
 	opt->pic->opt = opt;
 	opt->map->opt = opt;
-	opt->plr->pos.x = PIC_SIZE;
-	opt->plr->pos.y = PIC_SIZE;
+	opt->plr->pos.x = 0;
+	opt->plr->pos.y = 0;
 	opt->plr->angle = 0;
 	opt->plr->opt = opt;
 	opt->map->canvas = NULL;

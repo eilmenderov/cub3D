@@ -22,18 +22,20 @@
 # include <stdio.h>
 
 /* pic */
-# define MAP_SIZE		10
-# define PIC_SIZE		30
 # define SPRITE_SIZE	64
-# define DELTA			0
-# define RES_X			1280
-# define RES_Y			720
-# define REYS			100
-# define ANGLE			1.4835
+# define RES_X			1920
+# define RES_Y			1280
+# define REYS			50
 # define FOV			85.0
-# define DELIM			10
-# define ROT_SPEED		0.06
-# define MOVE_SPEED		0.1
+# define ROT_SPEED		0.1
+# define MOVE_SPEED		0.2
+# define M_2PI			6.283185307179586
+
+/* minimap */
+# define MAP_SIZE		10
+# define MAP_W_COLOR	0xFFFFFF
+# define MAP_PL_COLOR	0xFF0000
+# define MAP_RAY_COLOR	0x990099
 
 /* keys */
 # define W_KEY			13
@@ -98,10 +100,6 @@ typedef struct s_player
 	t_vector		pos;
 	t_vector		dir;
 	double			angle;
-	int				move;
-	int				strafe;
-	int				rotate;
-	int				run;
 	struct s_opt	*opt;
 }				t_player;
 
@@ -153,8 +151,6 @@ typedef struct s_opt
 	t_player		*plr;
 	t_pic			*pic;
 }				t_opt;
-
-
 
 /* 6/5 main.c */
 void	print_mandatori(t_opt *opt);

@@ -28,7 +28,7 @@ void	ft_cast_rays(t_opt *opt, double x, double y)
 		{
 			x_s += cos(start - opt->cnst->half_angle);
 			y_s += sin(start - opt->cnst->half_angle);
-			my_mlx_pixel_put(opt, (int)x_s, (int)y_s, 0x990099);
+			my_mlx_pixel_put(opt, (int)x_s, (int)y_s, MAP_RAY_COLOR);
 		}
 		start += step;
 	}
@@ -91,12 +91,11 @@ void	print_minimap(t_opt *opt)
 		while (opt->map->canvas[y][++x])
 		{
 			if (opt->map->canvas[y][x] == '1')
-				sizepixel(opt, step_x, step_y, 0xFFFFFF);
-			else
-				sizepixel(opt, step_x, step_y, 0x708090);
+				sizepixel(opt, step_x, step_y, MAP_W_COLOR);
 			step_x += MAP_SIZE;
 		}
 		step_y += MAP_SIZE;
 	}
-	sizepixel_player(opt, (int)(opt->plr->pos.x * MAP_SIZE), (int)(opt->plr->pos.y * MAP_SIZE), 0xFF0000);
+	sizepixel_player(opt, (int)(opt->plr->pos.x * MAP_SIZE),
+		(int)(opt->plr->pos.y * MAP_SIZE), MAP_PL_COLOR);
 }
