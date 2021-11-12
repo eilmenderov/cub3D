@@ -28,7 +28,7 @@ void	ft_plane(t_player *player)
 double	ft_angle(t_player *plr)
 {
 	if (plr->angle <= 0)
-		plr->angle += M_PI;
+		plr->angle += M_2PI;
 	if (plr->angle > M_2PI)
 		plr->angle -= M_2PI;
 	return (plr->angle);
