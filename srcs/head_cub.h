@@ -24,12 +24,11 @@
 /* pic */
 # define SPRITE_SIZE	64
 # define RES_X			1920
-# define RES_Y			1280
+# define RES_Y			1080
 # define REYS			50
 # define FOV			85.0
-# define ROT_SPEED		0.1
-# define MOVE_SPEED		0.2
-# define M_2PI			6.283185307179586
+# define ROT_SPEED		0.08
+# define MOVE_SPEED		0.15
 
 /* minimap */
 # define MAP_SIZE		10
@@ -50,6 +49,7 @@
 # define NONE		'0'
 # define WALL		'1'
 # define HERO		"NSEW"
+# define CHECK		"01"
 # define SYMBOLS	"NSEW 01"
 
 typedef struct s_vector
@@ -105,12 +105,12 @@ typedef struct s_player
 
 typedef struct s_dist
 {
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	int		stepX;
-	int		stepY;
+	double	sidedistx;
+	double	sidedisty;
+	double	deltadistx;
+	double	deltadisty;
+	int		stepx;
+	int		stepy;
 	int		x;
 	int		y;
 }				t_dist;
@@ -118,7 +118,7 @@ typedef struct s_dist
 typedef struct s_cnst
 {
 	double	tan_plane;
-	double	camX_const;
+	double	camx_const;
 	double	cos_rot;
 	double	half_angle;
 	double	map_step;
@@ -126,7 +126,7 @@ typedef struct s_cnst
 	double	half_diff;
 	double	angle;
 	int		b_p_p_del;
-	int		half_resY;
+	int		half_resy;
 }				t_cnst;
 
 typedef struct s_keys
@@ -180,7 +180,6 @@ void	ft_init_structs(t_opt *opt);
 void	ft_calculate_consts(t_opt *opt);
 
 /* 3/5 loudev.c */
-void	draw_line(t_opt *opt, int x, int drawStart, int drawEnd, int color);
 void	ft_draw_walls(t_opt *opt);
 
 /* 3/5	move.c */

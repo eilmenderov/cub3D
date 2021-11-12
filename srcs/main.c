@@ -65,7 +65,7 @@ void	print_mandatori(t_opt *opt)
 		x = 0;
 		while (x < RES_X)
 		{
-			if (y > opt->cnst->half_resY)
+			if (y > opt->cnst->half_resy)
 				my_mlx_pixel_put(opt, x, y, opt->map->floor);
 			else
 				my_mlx_pixel_put(opt, x, y, opt->map->sky);
@@ -82,8 +82,6 @@ int	draw_all(t_opt *opt)
 	ft_draw_walls(opt);
 	print_minimap(opt);
 	mlx_put_image_to_window(opt->mlx, opt->win, opt->mand->img, 0, 0);
-	// opt->keys = -1;
-	// mlx_do_sync(opt->mlx);
 	return (0);
 }
 

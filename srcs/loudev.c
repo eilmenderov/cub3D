@@ -2,59 +2,59 @@
 
 void	ft_init_dist(t_dist *dist, t_vector ray, t_player *plr)
 {
-	dist->deltaDistX = fabs(1 / ray.x);
-	dist->deltaDistY = fabs(1 / ray.y);
+	dist->deltadistx = fabs(1 / ray.x);
+	dist->deltadisty = fabs(1 / ray.y);
 	dist->x = (int)plr->pos.x;
 	dist->y = (int)plr->pos.y;
 	if (ray.x > 0)
 	{
-		dist->stepX = 1;
-		dist->sideDistX = (ceil(plr->pos.x) - plr->pos.x) * dist->deltaDistX;
+		dist->stepx = 1;
+		dist->sidedistx = (ceil(plr->pos.x) - plr->pos.x) * dist->deltadistx;
 	}
 	else
 	{
-		dist->stepX = -1;
-		dist->sideDistX = (plr->pos.x - floor(plr->pos.x)) * dist->deltaDistX;
+		dist->stepx = -1;
+		dist->sidedistx = (plr->pos.x - floor(plr->pos.x)) * dist->deltadistx;
 	}
 	if (ray.y > 0)
 	{
-		dist->stepY = 1;
-		dist->sideDistY = (ceil(plr->pos.y) - plr->pos.y) * dist->deltaDistY;
+		dist->stepy = 1;
+		dist->sidedisty = (ceil(plr->pos.y) - plr->pos.y) * dist->deltadisty;
 	}
 	else
 	{
-		dist->stepY = -1;
-		dist->sideDistY = (plr->pos.y - floor(plr->pos.y)) * dist->deltaDistY;
+		dist->stepy = -1;
+		dist->sidedisty = (plr->pos.y - floor(plr->pos.y)) * dist->deltadisty;
 	}
 }
 
-double	ft_find_dist(t_vector ray, t_player *plr, char **map,char *side)
+double	ft_find_dist(t_vector ray, t_player *plr, char **map, char *side)
 {
 	t_dist	dist;
 	int		fl;
 
 	ft_init_dist(&dist, ray, plr);
-	while(map[dist.y][dist.x] != '1')
+	while (map[dist.y][dist.x] != '1')
 	{
-		if (dist.sideDistX < dist.sideDistY)
+		if (dist.sidedistx < dist.sidedisty)
 		{
-			dist.sideDistX += dist.deltaDistX;
-			dist.x += dist.stepX;
+			dist.sidedistx += dist.deltadistx;
+			dist.x += dist.stepx;
 			fl = 1;
 		}
 		else
 		{
-			dist.sideDistY += dist.deltaDistY;
-			dist.y += dist.stepY;
+			dist.sidedisty += dist.deltadisty;
+			dist.y += dist.stepy;
 			fl = 0;
 		}
 	}
 	if (fl)
 		*side = 'H';
 	if (fl)
-		return ((dist.x - plr->pos.x + (1 - dist.stepX) * 0.5) / ray.x);
+		return ((dist.x - plr->pos.x + (1 - dist.stepx) * 0.5) / ray.x);
 	*side = 'V';
-	return ((dist.y - plr->pos.y + (1 - dist.stepY) * 0.5) / ray.y);
+	return ((dist.y - plr->pos.y + (1 - dist.stepy) * 0.5) / ray.y);
 }
 
 t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
@@ -85,7 +85,7 @@ t_vector	get_tex_data(t_vector ray, t_player *plr, t_opt *opt, t_img **tex)
 	return (trash);
 }
 
-unsigned int *ft_get_pix(t_img *img, int x, int y)
+unsigned int	*ft_get_color(t_img *img, int x, int y)
 {
 	return ((unsigned *)(img->addr + y * img->line_length
 		+ x * img->b_p_p));
@@ -93,25 +93,24 @@ unsigned int *ft_get_pix(t_img *img, int x, int y)
 
 void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)
 {
-	int		p_x;
-	int		p_y;
-	int		start;
-	int		finish;
-	double	step;
-	double	pos;
+	int			p_x;
+	int			p_y;
+	int			start;
+	int			finish;
+	t_vector	step_pos;
 
-	step = (double)SPRITE_SIZE / trash.y;
+	step_pos.x = (double)SPRITE_SIZE / trash.y;
 	start = (RES_Y - (int)trash.y) / 2;
 	if (start < 0)
 		start = 0;
 	finish = RES_Y - start;
 	p_x = (int)((double)SPRITE_SIZE * trash.x);
-	pos = (start + ((int)trash.y - RES_Y) / 2) * step;
+	step_pos.y = (start + ((int)trash.y - RES_Y) * 0.5) * step_pos.x;
 	while (start < finish)
 	{
-		p_y = (int)pos & (SPRITE_SIZE - 1);
-		my_mlx_pixel_put(opt, x, start, *ft_get_pix(tex, p_x, p_y));
-		pos += step;
+		p_y = (int)step_pos.y & (SPRITE_SIZE - 1);
+		my_mlx_pixel_put(opt, x, start, *ft_get_color(tex, p_x, p_y));
+		step_pos.y += step_pos.x;
 		start++;
 	}
 }
@@ -119,7 +118,7 @@ void	put_tex_stripe(t_opt *opt, int x, t_vector trash, t_img *tex)
 void	ft_draw_walls(t_opt *opt)
 {
 	int			x;
-	double		cameraX;
+	double		camerax;
 	t_img		*tex;
 	t_vector	ray;
 	t_vector	trash;
@@ -127,9 +126,9 @@ void	ft_draw_walls(t_opt *opt)
 	x = 0;
 	while (x < RES_X)
 	{
-		cameraX = (double)x * opt->cnst->camX_const - 1;
-		ray.x = opt->plr->dir.x + opt->plr->plane.x * cameraX;
-		ray.y = opt->plr->dir.y + opt->plr->plane.y * cameraX;
+		camerax = (double)x * opt->cnst->camx_const - 1;
+		ray.x = opt->plr->dir.x + opt->plr->plane.x * camerax;
+		ray.y = opt->plr->dir.y + opt->plr->plane.y * camerax;
 		trash = get_tex_data(ray, opt->plr, opt, &tex);
 		trash.y = (double)RES_Y / trash.y;
 		put_tex_stripe(opt, x, trash, tex);

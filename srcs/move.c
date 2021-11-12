@@ -28,12 +28,12 @@ void	rotate_player(t_opt *opt, double rot_speed)
 
 void	move(t_opt *opt, double step_x, double step_y)
 {
-	if(!ft_check_p(opt->map, opt, step_x, 0))
+	if (!ft_check_p(opt->map, opt, step_x, 0))
 		opt->plr->pos.x += step_x;
-	if(!ft_check_p(opt->map, opt, 0, step_y))
+	if (!ft_check_p(opt->map, opt, 0, step_y))
 		opt->plr->pos.y += step_y;
 }
- 
+
 void	move_player(t_opt *opt)
 {
 	double	step_x;

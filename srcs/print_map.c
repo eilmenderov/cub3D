@@ -24,7 +24,8 @@ void	ft_cast_rays(t_opt *opt, double x, double y)
 	{
 		x_s = x;
 		y_s = y;
-		while (opt->map->canvas[(int)(y_s / MAP_SIZE)][(int)(x_s / MAP_SIZE)] != '1')
+		while (opt->map->canvas[(int)(y_s / MAP_SIZE)][(int)(x_s / MAP_SIZE)]
+			!= '1')
 		{
 			x_s += cos(start - opt->cnst->half_angle);
 			y_s += sin(start - opt->cnst->half_angle);

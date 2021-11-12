@@ -192,6 +192,36 @@ void	ft_check_map(t_opt *opt, int fd, int gnl)
 	ft_pool_field(lst, opt->map->heigh, opt->map);
 	ft_free_all_lst(lst);
 	close (fd);
+	if (!opt->map->viewpos)
+		puterror("hero not found");
+}
+
+int	ft_check_char(char **field, int i, int j, t_map *map)
+{
+	int	len;
+
+	if (!ft_ch_for_coinc(field[i][j + 1], CHECK) || (!j && field[i][j] != '1'))
+		return (1);
+	if (j && !ft_ch_for_coinc(field[i][j - 1], CHECK))
+		return (1);
+	if (!i && i == map->heigh - 1)
+		return (0);
+	if (field[i][j] != '1' && ((int)ft_strlen_m(field[i + 1], 0) < j
+		|| (int)ft_strlen_m(field[i - 1], 0) < j))
+		return (1);
+	len = ft_strlen_m(field[i + 1], 0);
+	if (!ft_ch_for_coinc(field[i + 1][j], CHECK))
+		return (1);
+	if (len >= j && field[i][j] == '0' && (!ft_ch_for_coinc(field[i + 1]
+		[j + 1], CHECK) || !ft_ch_for_coinc(field[i + 1][j - 1], CHECK)))
+		return (1);
+	len = ft_strlen_m(field[i - 1], 0);
+	if (!ft_ch_for_coinc(field[i - 1][j], CHECK))
+		return (1);
+	if (len >= j && field[i][j] == '0' && (!ft_ch_for_coinc(field[i - 1]
+		[j + 1], CHECK) || !ft_ch_for_coinc(field[i - 1][j - 1], CHECK)))
+		return (1);
+	return (0);
 }
 
 void	ft_check_field(char **field, t_map *map)
@@ -207,10 +237,11 @@ void	ft_check_field(char **field, t_map *map)
 			puterror("incorrect map field(spaces)");
 		while (field[i][j])
 		{
-			if (ft_ch_for_coinc(field[i][j], "NSEW0"))
+			if (ft_ch_for_coinc(field[i][j], "0"))
 			{
-				if (!i || !field[i + 1] || !field[i][j + 1] || i == map->heigh)
-					puterror("incorrect map field");
+				if (((!i || i == map->heigh - 1) && field[i][j] == '0')
+					|| ft_check_char(field, i, j, map))
+					puterror("incorrect map field(walls)");
 			}
 			j++;
 		}
@@ -250,19 +281,24 @@ void	ft_parcer(t_opt *opt, char *file)
 {
 	int	fd;
 	int	len;
+	int	max_width;
+	int	max_height;
 
 	len = ft_strlen_m(file, 0);
 	if (len < 4 || ft_strncmp(file + len - 4, ".cub", 5))
 		puterror("incorrect map name, need <map_name.cub>");
+	mlx_get_screen_size(&max_width, &max_height);
+	if (max_width < RES_X || max_height < RES_Y)
+		puterror("incorrect resolution");
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		puterror("file does not exist, access denied or open error");
 	ft_init_structs(opt);
 	ft_check_map(opt, fd, 1);
+	opt->map->canvas[(int)opt->plr->pos.y][(int)opt->plr->pos.x] = '0';
 	ft_check_field(opt->map->canvas, opt->map);
 	ft_init_images(opt);
 	ft_init_sprites(opt, opt->map);
-	opt->map->canvas[(int)opt->plr->pos.y][(int)opt->plr->pos.x] = '0';
 	ft_calculate_consts(opt);
 	ft_plane(opt->plr);
 }
