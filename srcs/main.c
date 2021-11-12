@@ -15,17 +15,17 @@
 int	key_press(int key, t_opt *opt)
 {
 	if (key == W_KEY)
-		opt->keys = 1;
+		opt->keys->w = 1;
 	else if (key == S_KEY)
-		opt->keys = 2;
+		opt->keys->s = 1;
 	else if (key == D_KEY)
-		opt->keys = 3;
+		opt->keys->d = 1;
 	else if (key == A_KEY)
-		opt->keys = 4;
+		opt->keys->a = 1;
 	else if (key == RL_KEY)
-		opt->keys = 5;
+		opt->keys->arrow_l = 1;
 	else if (key == RR_KEY)
-		opt->keys = 6;
+		opt->keys->arrow_r = 1;
 	if (key == ESC_KEY)
 		exit(0);
 	return (key);
@@ -34,17 +34,17 @@ int	key_press(int key, t_opt *opt)
 int	key_release(int key, t_opt *opt)
 {
 	if (key == W_KEY)
-		opt->keys = 1;
+		opt->keys->w = -1;
 	else if (key == S_KEY)
-		opt->keys = 2;
+		opt->keys->s = -1;
 	else if (key == D_KEY)
-		opt->keys = 3;
+		opt->keys->d = -1;
 	else if (key == A_KEY)
-		opt->keys = 4;
+		opt->keys->a = -1;
 	else if (key == RL_KEY)
-		opt->keys = 5;
+		opt->keys->arrow_l = -1;
 	else if (key == RR_KEY)
-		opt->keys = 6;
+		opt->keys->arrow_r = -1;
 	return (key);
 }
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv)
 	// printf("x: %f	y: %f\n",  opt.x_widht, opt.plr->pos_y), exit(0);
 	mlx_hook(opt.win, 17, 0l, closer, &opt);
 	mlx_hook(opt.win, 2, 0, key_press, &opt);
-	// mlx_hook(opt.win, 3, 0, key_release, &opt.keys);
+	mlx_hook(opt.win, 3, 0, key_release, &opt);
 	mlx_loop_hook(opt.mlx, draw_all, &opt);
 	mlx_loop(opt.mlx);
 }

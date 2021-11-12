@@ -27,7 +27,7 @@ void	move(t_opt *opt, double step_x, double step_y)
 	if(!ft_check_p(opt->map, opt, 0, step_y))
 		opt->plr->pos.y += step_y;
 }
-
+ 
 void	move_player(t_opt *opt)
 {
 	double	step_x;
@@ -35,18 +35,16 @@ void	move_player(t_opt *opt)
 
 	step_x = opt->plr->dir.x * MOVE_SPEED;
 	step_y = opt->plr->dir.y * MOVE_SPEED;
-	if (opt->keys == 1)
+	if (opt->keys->w == 1)
 		move(opt, step_x, step_y);
-	if (opt->keys == 2)
+	if (opt->keys->s == 1)
 		move(opt, -step_x, -step_y);
-	if (opt->keys == 3)
+	if (opt->keys->d == 1)
 		move(opt, -step_y, step_x);
-	if (opt->keys == 4)
+	if (opt->keys->a == 1)
 		move(opt, step_y, -step_x);
-	if (opt->keys == 5)
+	if (opt->keys->arrow_l == 1)
 		rotate_player(opt, -ROT_SPEED);
-	if (opt->keys == 6)
+	if (opt->keys->arrow_r == 1)
 		rotate_player(opt, ROT_SPEED);
-	opt->old_keys = opt->keys;
-	opt->keys = -1;
 }
