@@ -30,8 +30,14 @@ static void	ft_init_opt_map(t_opt *opt)
 	opt->map->viewpos = 0;
 	opt->map->flag = 0;
 	opt->map->width = 0;
-	opt->keys = -1;
-	opt->old_keys = -1;
+
+	/*key-hook*/
+	opt->keys->w = -1;
+	opt->keys->s = -1;
+	opt->keys->d = -1;
+	opt->keys->a = -1;
+	opt->keys->arrow_l = -1;
+	opt->keys->arrow_r = -1;
 }
 
 void	ft_init_images(t_opt *opt)
@@ -59,6 +65,9 @@ void	ft_init_structs(t_opt *opt)
 		puterror("can't allocate memory(map)");
 	opt->pic = malloc(sizeof(t_pic));
 	if (!opt->pic)
+		puterror("can't allocate memory(pic)");
+	opt->keys = malloc(sizeof(t_keys));
+	if (!opt->keys)
 		puterror("can't allocate memory(pic)");
 	opt->mlx = mlx_init();
 	if (!opt->mlx)

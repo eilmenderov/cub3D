@@ -130,13 +130,22 @@ typedef struct s_cnst
 	int		b_p_p_del;
 }				t_cnst;
 
+typedef struct s_keys
+{
+	int		w;
+	int		a;
+	int		s;
+	int		d;
+	int		arrow_l;
+	int		arrow_r;
+}				t_keys;
+
 typedef struct s_opt
 {
 	void			*mlx;
 	void			*win;
-	int				keys;
-	int				old_keys;
 
+	t_keys			*keys;
 	t_cnst			*cnst;
 	t_img			*mand;
 	t_map			*map;
