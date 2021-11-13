@@ -28,7 +28,6 @@
 # define FOV			85.0
 # define ROT_SPEED		0.08
 # define MOVE_SPEED		0.10
-
 # define SPRITE_SIZE	64
 
 /* minimap */
@@ -168,7 +167,7 @@ int		key_release(int key, t_opt *opt);
 /* 5/5 loudev.c */
 void	ft_draw_walls(t_opt *opt);
 
-/* 5/5 main.c */
+/* 5/5 main.c / main_bonus.c */
 int		closer(t_opt *opt);
 void	my_mlx_pixel_put(t_opt *opt, int x, int y, int color);
 

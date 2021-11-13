@@ -1,8 +1,8 @@
 SRCS		= main.c parcer.c utils.c init.c loudev.c move.c keys.c \
 			  parcer_check_map.c parcer_pool_field.c
 
-BONUS		= main_bonus.c parcer.c utils.c print_map_bonus.c init.c \
-			  loudev.c move.c keys.c parcer_check_map.c parcer_pool_field.c
+BONUS		= main_bonus.c parcer.c utils.c init.c loudev.c move.c keys.c \
+			  parcer_check_map.c parcer_pool_field.c print_map_bonus.c
 
 SRCS_DIR	= ./srcs/
 
@@ -20,8 +20,6 @@ MLX_LIBS	= -lmlx -lm -L ./minilibx_opengl -framework OpenGL -framework AppKit
 
 LIB			= ./libft/libft.a
 
-LOGDATE		= $(shell date)
-
 CC = gcc
 RM = rm -f
 
@@ -37,7 +35,7 @@ SHALLOW = \033[0m
 
 # END COLORS
 
-.PHONY: all clean fclean re bonus norm libft minilibx pull push
+.PHONY: all clean fclean re bonus norm libft minilibx
 
 all:		${NAME}
 
@@ -53,18 +51,19 @@ libft:
 ${NAME}:	${OBJS} ${HEADER}
 			${MAKE} -C ./libft/
 			${MAKE} -C ./minilibx_opengl 2> /dev/null
-			${CC} ${CFLAGS} -o ${NAME} -I ${HEADER} ${OBJS} ${LIB} ${MLX_LIBS}
+			${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${MLX_LIBS}
 			@echo "${GREEN}${NAME} compile!${SHALLOW}"
 
 bonus:		${BONUS_OBJS} ${HEADER}
 			${MAKE} -C ./libft/
 			${MAKE} -C ./minilibx_opengl 2> /dev/null
-			${CC} ${CFLAGS} -o ${B_NAME} -I ${HEADER} ${BONUS_OBJS} ${LIB} ${MLX_LIBS}
+			${CC} ${CFLAGS} -o ${B_NAME} ${BONUS_OBJS} ${LIB} ${MLX_LIBS}
 			@echo "${NEW}${B_NAME} compile!${SHALLOW}"
 
 norm:
 			@echo "${GREEN}|-----Chek NORMs!-----|${NEW}"
 			@norminette ./srcs/
+			@norminette ./head_cub.h
 			@norminette ./libft/
 			@echo "${GREEN}|-----Chek ended!-----|${SHALLOW}"
 
@@ -79,16 +78,5 @@ fclean:
 			@make fclean -C ./libft/
 			@make -C minilibx_opengl/ clean
 			@echo "${YELO}fclean done!${SHALLOW}"
-
-pull:		fclean
-			@git pull
-			@echo "${GREEN}---Pull done!---${SHALLOW}"
-
-push:		fclean
-			@git pull
-			@git add .
-			@git commit -m "${LOGDATE}"
-			@git push
-			@echo "${GREEN}---Push done!---${SHALLOW}"
 
 re:			fclean all
