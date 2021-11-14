@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:09:06 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/07 16:30:09 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/14 13:34:16 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 /* pic */
 # define RES_X			1280
 # define RES_Y			720
-# define REYS			50
+# define REYS			1000
 # define FOV			85.0
-# define ROT_SPEED		0.08
-# define MOVE_SPEED		0.10
+# define ROT_SPEED		0.05
+# define MOVE_SPEED		0.05
 # define SPRITE_SIZE	64
 
 /* minimap */
-# define MAP_SIZE		10
+# define MAP_SIZE		5
 # define MAP_W_COLOR	0xFFFFFF
 # define MAP_PL_COLOR	0xFF0000
 # define MAP_RAY_COLOR	0x990099

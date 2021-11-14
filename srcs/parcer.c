@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 13:35:26 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/07 15:50:51 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/14 13:27:46 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	ft_parcer(t_opt *opt, char *file)
 	if (len < 4 || ft_strncmp(file + len - 4, ".cub", 5))
 		puterror("incorrect map name, need <map_name.cub>");
 	mlx_get_screen_size(&max_width, &max_height);
+	printf("v: %d h: %d\n", max_width, max_height);
 	if (max_width < RES_X || max_height < RES_Y)
 		puterror("incorrect resolution");
 	fd = open(file, O_RDONLY);
