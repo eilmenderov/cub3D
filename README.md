@@ -1,12 +1,28 @@
 # 3D-game - cub3D
+## Introduction
+This project is inspired by the world-famous Wolfenstein 3D game, whichwas the first FPS ever. It will enable you to explore ray-casting. Your goal will be tomake a dynamic view inside a maze, in which you’ll have to find your way.
+
+### This group project was written by [Avchar](https://github.com/Avchar) and [lex-cmd](https://github.com/lex-cmd)
+
 ###  Usage:
-* ```make``` - to compile project
-* ```./cub3D ./maps/map.cub``` - to start project
+* ```make bonus``` - to compile project
+* ```./cub3D_bonus ./maps/map.cub``` - to start project
 * or 
 ```
-make && ./cub3D ./maps/map.cub
+make bonus && ./cub3D_bonus ./maps/map.cub
 ```
-
+* you can change the map according to the following rules:
+```
+* only one player on the map
+* map must be closed(without holes)
+* '1' - wall
+* '0' - floor
+* 'N' or 'S' or 'W' or 'E' - player start position
+* "NO", "SO", "WE", "EA" - the path to the wall textures
+* also you can change floor(F) and ceil(C) colors
+```
+## Example
+![cub3D](./cub3D.png)
 
 <h3>You are allowed to use the following functions:</h3>
 
