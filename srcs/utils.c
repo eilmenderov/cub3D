@@ -6,7 +6,7 @@
 /*   By: vleida <vleida@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 14:56:33 by vleida            #+#    #+#             */
-/*   Updated: 2021/11/05 17:49:22 by vleida           ###   ########.fr       */
+/*   Updated: 2021/11/14 13:09:45 by vleida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	ft_atoi_m(const char *str)
 		puterror("incorrect color format(atoi_m 1)");
 	if (*str == '-' || *str == '+')
 		str++;
-	while (*str && *str >= '0' && *str <= '9' && res <= FT_ATOI_MN)
+	while (*str && *str >= '0' && *str <= '9' && res <= 255)
 	{
 		res = res * 10 + (*str - 48);
 		str++;
 	}
-	if ((res > FT_ATOI_MV && negative == 1) || (*str != ',' && *str != 0))
+	if ((res > 255 && negative == 1) || (*str != ',' && *str != 0))
 		puterror("incorrect color format(atoi_m 2)");
 	return ((int)res * negative);
 }

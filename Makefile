@@ -1,14 +1,14 @@
 SRCS		= main.c parcer.c utils.c init.c loudev.c move.c keys.c \
 			  parcer_check_map.c parcer_pool_field.c
 
-BONUS		= main_bonus.c parcer.c utils.c init.c loudev.c move.c keys.c \
+SRCS_B		= main_bonus.c parcer.c utils.c init.c loudev.c move.c keys.c \
 			  parcer_check_map.c parcer_pool_field.c print_map_bonus.c
 
 SRCS_DIR	= ./srcs/
 
 OBJS		= ${addprefix ${SRCS_DIR}, ${SRCS:.c=.o}}
 
-BONUS_OBJS	= ${addprefix ${SRCS_DIR}, ${BONUS:.c=.o}}
+OBJS_B	= ${addprefix ${SRCS_DIR}, ${SRCS_B:.c=.o}}
 
 NAME		= cub3D
 
@@ -54,10 +54,12 @@ ${NAME}:	${OBJS} ${HEADER}
 			${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${MLX_LIBS}
 			@echo "${GREEN}${NAME} compile!${SHALLOW}"
 
-bonus:		${BONUS_OBJS} ${HEADER}
-			${MAKE} -C ./libft/
-			${MAKE} -C ./minilibx_opengl 2> /dev/null
-			${CC} ${CFLAGS} -o ${B_NAME} ${BONUS_OBJS} ${LIB} ${MLX_LIBS}
+bonus:		${B_NAME}
+
+${B_NAME}:	${OBJS_B} ${HEADER}
+			make -C ./libft/
+			make -C ./minilibx_opengl 2> /dev/null
+			${CC} ${CFLAGS} -o ${B_NAME} ${OBJS_B} ${LIB} ${MLX_LIBS}
 			@echo "${NEW}${B_NAME} compile!${SHALLOW}"
 
 norm:
@@ -68,13 +70,13 @@ norm:
 			@echo "${GREEN}|-----Chek ended!-----|${SHALLOW}"
 
 clean:		
-			@${RM} ${OBJS} ${BONUS_OBJS}
+			@${RM} ${OBJS} ${OBJS_B}
 			@make clean -C ./libft/
 			@make -C minilibx_opengl/ clean
 			@echo "${BLUE}clean done!${SHALLOW}"
 
 fclean:		
-			@${RM} ${OBJS} ${BONUS_OBJS} ${NAME} ${B_NAME}
+			@${RM} ${OBJS} ${OBJS_B} ${NAME} ${B_NAME}
 			@make fclean -C ./libft/
 			@make -C minilibx_opengl/ clean
 			@echo "${YELO}fclean done!${SHALLOW}"
